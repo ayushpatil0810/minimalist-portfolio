@@ -2,42 +2,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { motion } from "framer-motion";
-import {
-  LinkedinLogoIcon,
-  GithubLogoIcon,
-  EnvelopeIcon,
-  XLogoIcon,
-  InstagramLogoIcon,
-  ReadCvLogoIcon,
-} from "@phosphor-icons/react";
-
-const socials = [
-  {
-    href: "mailto:hello@ayushpatil.dev",
-    icon: EnvelopeIcon,
-    label: "Email",
-  },
-  {
-    href: "https://github.com",
-    icon: GithubLogoIcon,
-    label: "GitHub",
-  },
-  {
-    href: "https://linkedin.com",
-    icon: LinkedinLogoIcon,
-    label: "LinkedIn",
-  },
-  {
-    href: "https://twitter.com",
-    icon: XLogoIcon,
-    label: "Twitter / X",
-  },
-  {
-    href: "https://instagram.com",
-    icon: InstagramLogoIcon,
-    label: "Instagram",
-  },
-];
+import { socials } from "@/config/socials";
+import { ReadCvLogoIcon } from "@phosphor-icons/react";
 
 export function Hero() {
   return (

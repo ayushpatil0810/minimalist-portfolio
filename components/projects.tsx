@@ -1,59 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowUpRightIcon } from "@phosphor-icons/react";
+import { ArrowUpRightIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-
-const techIcons: Record<string, string> = {
-  "Node.js":
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-  TypeScript:
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-  CLI: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bash/bash-original.svg",
-  React:
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-  "Next.js":
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-  Tailwind:
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-  "Prism.js":
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-  Git: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",
-  WebSockets:
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/socketio/socketio-original.svg",
-  Redis:
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/redis/redis-original.svg",
-};
-
-const projects = [
-  {
-    name: "Tempo",
-    description:
-      "A minimal time-tracking CLI for developers who hate time-tracking.",
-    url: "#",
-    tech: ["Node.js", "TypeScript", "CLI"],
-  },
-  {
-    name: "Inkwell",
-    description: "Markdown editor that gets out of your way. Nothing more.",
-    url: "#",
-    tech: ["React", "Next.js", "Tailwind"],
-  },
-  {
-    name: "Patchwork",
-    description:
-      "Git diff viewer with syntax highlighting and side-by-side diffs.",
-    url: "#",
-    tech: ["React", "Prism.js", "Git"],
-  },
-  {
-    name: "Signal",
-    description: "Real-time notification system built on WebSockets and Redis.",
-    url: "#",
-    tech: ["Node.js", "WebSockets", "Redis"],
-  },
-];
+import { techIcons, projectsData } from "@/config/projects";
 
 export function Projects() {
   return (
@@ -68,8 +19,8 @@ export function Projects() {
         Projects
       </h2>
 
-      <div className="space-y-2">
-        {projects.map((project, index) => (
+      <div className="space-y-4">
+        {projectsData.map((project, index) => (
           <motion.div
             key={project.name}
             initial={{ opacity: 0, y: 20 }}
@@ -77,18 +28,43 @@ export function Projects() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: index * 0.1 }}
           >
-            <Link
-              href={project.url}
-              className="group flex items-start justify-between gap-4 p-4 -mx-4 
+            <div
+              className="group flex flex-col items-start gap-4 p-4 -mx-4 
               border border-transparent
               hover:border-dashed hover:border-border/70 hover:bg-muted/10 
               transition-all duration-300"
               style={{ borderRadius: 0 }}
             >
-            <div>
-              <h3 className="text-[1rem] tracking-tight text-foreground/90 group-hover:text-foreground transition-colors">
-                {project.name}
-              </h3>
+            <div className="w-full">
+              <div className="flex items-center justify-between w-full">
+                <h3 className="text-[1rem] tracking-tight text-foreground/90 group-hover:text-foreground transition-colors">
+                  {project.name}
+                </h3>
+                
+                {/* Links for desktop */}
+                <div className="flex items-center gap-3 opacity-0 translate-y-1 group-hover:opacity-100 group-hover:translate-y-0 transition-all duration-300">
+                  {project.githubUrl && (
+                    <Link
+                      href={project.githubUrl}
+                      target="_blank"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      title="View Source on GitHub"
+                    >
+                      <GithubLogoIcon size={18} />
+                    </Link>
+                  )}
+                  {project.liveUrl && (
+                    <Link
+                      href={project.liveUrl}
+                      target="_blank"
+                      className="text-muted-foreground hover:text-foreground transition-colors"
+                      title="View Live Site"
+                    >
+                      <ArrowUpRightIcon size={18} />
+                    </Link>
+                  )}
+                </div>
+              </div>
 
               <p className="text-[0.875rem] text-muted-foreground leading-relaxed mt-1">
                 {project.description}
@@ -117,12 +93,7 @@ export function Projects() {
                 ))}
               </div>
             </div>
-
-            <ArrowUpRightIcon
-              size={16}
-              className="mt-1 text-muted-foreground opacity-0 -translate-x-2 translate-y-2 group-hover:opacity-100 group-hover:translate-x-0 group-hover:translate-y-0 transition-all duration-300"
-            />
-            </Link>
+            </div>
           </motion.div>
         ))}
       </div>
