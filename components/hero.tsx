@@ -38,7 +38,7 @@ export function Hero() {
         I build full stack applications,
         <br />
         <span className="text-muted-foreground">
-          with a focus on backend architecture and AI/ML.
+          with a focus on backend architecture.
         </span>
       </h1>
 

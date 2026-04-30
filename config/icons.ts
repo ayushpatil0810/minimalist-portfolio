@@ -53,9 +53,7 @@ export const icons: Record<string, string> = {
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
   "Scikit-learn":
     "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg",
-  LLMs: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-  "OpenAI SDK":
-    "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
+  "OpenAI SDK": "/tech-stack/openai.svg",
   "Gemini API":
     "https://upload.wikimedia.org/wikipedia/commons/1/1d/Google_Gemini_icon_2025.svg",
 

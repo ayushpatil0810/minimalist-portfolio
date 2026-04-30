@@ -40,7 +40,6 @@ export const skillCategories = [
       { name: "Matplotlib", icon: icons["Matplotlib"] },
       { name: "Seaborn", icon: icons["Seaborn"] },
       { name: "Scikit-learn", icon: icons["Scikit-learn"] },
-      { name: "LLMs", icon: icons["LLMs"] },
       { name: "OpenAI SDK", icon: icons["OpenAI SDK"] },
     ],
   },
