@@ -1,28 +1,38 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useTheme } from "next-themes";
 import { SunIcon, MoonIcon } from "@phosphor-icons/react";
+import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const [dark, setDark] = useState(false);
+  const { theme, setTheme } = useTheme();
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    const isDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-    setDark(isDark);
+    setMounted(true);
   }, []);
 
-  useEffect(() => {
-    document.documentElement.classList.toggle("dark", dark);
-  }, [dark]);
+  if (!mounted) {
+    return (
+      <div className="fixed top-6 right-6 z-50">
+        <button
+          className="p-2 rounded-full text-muted-foreground transition-colors duration-300"
+          aria-label="Toggle theme"
+        >
+          <div className="w-4.5 h-4.5" />
+        </button>
+      </div>
+    );
+  }
 
   return (
     <div className="fixed top-6 right-6 z-50">
       <button
-        onClick={() => setDark(!dark)}
+        onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
         className="p-2 rounded-full text-muted-foreground hover:text-foreground transition-colors duration-300"
         aria-label="Toggle theme"
       >
-        {dark ? <SunIcon size={18} /> : <MoonIcon size={18} />}
+        {theme === "dark" ? <SunIcon size={18} /> : <MoonIcon size={18} />}
       </button>
     </div>
   );

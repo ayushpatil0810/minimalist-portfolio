@@ -4,6 +4,7 @@ import { Projects } from "@/components/projects";
 import { About } from "@/components/about";
 import { ContactForm } from "@/components/contact-form";
 import { SiteFooter } from "@/components/site-footer";
+import { Skills } from "@/components/skills";
 
 export default function App() {
   return (
@@ -15,8 +16,9 @@ export default function App() {
 
       <main className="max-w-2xl mx-auto px-6 py-24">
         <Hero />
-        <About />
         <Projects />
+        <About />
+        <Skills />
         <ContactForm />
         <SiteFooter />
       </main>

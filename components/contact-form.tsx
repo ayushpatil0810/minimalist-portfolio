@@ -1,10 +1,17 @@
 "use client";
 
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
+import { motion } from "framer-motion";
 
 export function ContactForm() {
   return (
-    <section className="mb-16">
+    <motion.section 
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-100px" }}
+      transition={{ duration: 0.5 }}
+      className="mb-16"
+    >
       <h2 className="text-[0.8rem] uppercase tracking-[0.15em] text-muted-foreground mb-8">
         Contact
       </h2>
@@ -47,6 +54,6 @@ export function ContactForm() {
           <ArrowUpRightIcon size={13} />
         </button>
       </form>
-    </section>
+    </motion.section>
   );
 }

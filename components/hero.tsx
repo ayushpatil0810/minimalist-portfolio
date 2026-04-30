@@ -1,12 +1,14 @@
 "use client";
 import Image from "next/image";
 import Link from "next/link";
+import { motion } from "framer-motion";
 import {
   LinkedinLogoIcon,
   GithubLogoIcon,
   EnvelopeIcon,
   XLogoIcon,
   InstagramLogoIcon,
+  ReadCvLogoIcon,
 } from "@phosphor-icons/react";
 
 const socials = [
@@ -39,7 +41,12 @@ const socials = [
 
 export function Hero() {
   return (
-    <section className="mb-24">
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+      className="mb-24"
+    >
       <div className="flex items-center gap-6 mb-10">
         <div className="w-28 h-28 rounded-full overflow-hidden ring-1 ring-border/40">
           <Image
@@ -105,6 +112,16 @@ export function Hero() {
           </div>
         ))}
       </div>
-    </section>
+
+      <div className="mt-8 flex gap-4 items-center">
+        <Link
+          href="/resume"
+          className="inline-flex h-9 items-center justify-center bg-foreground px-4 py-2 text-sm font-medium text-background transition-colors hover:bg-foreground/90 disabled:pointer-events-none disabled:opacity-50"
+        >
+          View Resume
+          <ReadCvLogoIcon className="ml-2" />
+        </Link>
+      </div>
+    </motion.section>
   );
 }
