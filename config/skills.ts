@@ -1,173 +1,71 @@
+import { icons } from "./icons";
+
 export const skillCategories = [
   {
     category: "Languages",
     skills: [
-      {
-        name: "Python",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      },
-      {
-        name: "JavaScript",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",
-      },
-      {
-        name: "TypeScript",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",
-      },
-      {
-        name: "C / C++",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/cplusplus/cplusplus-original.svg",
-      },
-      {
-        name: "Dart",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dart/dart-original.svg",
-      },
-      {
-        name: "SQL",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-      },
+      { name: "Python", icon: icons["Python"] },
+      { name: "JavaScript", icon: icons["JavaScript"] },
+      { name: "TypeScript", icon: icons["TypeScript"] },
+      { name: "C / C++", icon: icons["C / C++"] },
+      { name: "Dart", icon: icons["Dart"] },
+      { name: "SQL", icon: icons["SQL"] },
     ],
   },
   {
     category: "Frontend",
     skills: [
-      {
-        name: "React",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",
-      },
-      {
-        name: "Next.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg",
-      },
-      {
-        name: "HTML & CSS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",
-      },
-      {
-        name: "Bootstrap",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg",
-      },
-      {
-        name: "Tailwind CSS",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg",
-      },
+      { name: "React", icon: icons["React"] },
+      { name: "Next.js", icon: icons["Next.js"] },
+      { name: "HTML & CSS", icon: icons["HTML & CSS"] },
+      { name: "Bootstrap", icon: icons["Bootstrap"] },
+      { name: "Tailwind CSS", icon: icons["Tailwind CSS"] },
     ],
   },
   {
     category: "Backend",
     skills: [
-      {
-        name: "Node.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg",
-      },
-      {
-        name: "Bun",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bun/bun-original.svg",
-      },
-      {
-        name: "Express.js",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/express/express-original.svg",
-      },
-      {
-        name: "FastAPI",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/fastapi/fastapi-original.svg",
-      },
-      {
-        name: "Flask",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flask/flask-original.svg",
-      },
+      { name: "Node.js", icon: icons["Node.js"] },
+      { name: "Bun", icon: icons["Bun"] },
+      { name: "Express.js", icon: icons["Express.js"] },
+      { name: "FastAPI", icon: icons["FastAPI"] },
+      { name: "Flask", icon: icons["Flask"] },
     ],
   },
   {
     category: "AI & Data Science",
     skills: [
-      {
-        name: "Pandas",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/pandas/pandas-original.svg",
-      },
-      {
-        name: "NumPy",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/numpy/numpy-original.svg",
-      },
-      {
-        name: "Matplotlib",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/matplotlib/matplotlib-original.svg",
-      },
-      {
-        name: "Seaborn",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      },
-      {
-        name: "Scikit-learn",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/scikitlearn/scikitlearn-original.svg",
-      },
-      {
-        name: "LLMs",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      },
-      {
-        name: "OpenAI SDK",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg",
-      },
+      { name: "Pandas", icon: icons["Pandas"] },
+      { name: "NumPy", icon: icons["NumPy"] },
+      { name: "Matplotlib", icon: icons["Matplotlib"] },
+      { name: "Seaborn", icon: icons["Seaborn"] },
+      { name: "Scikit-learn", icon: icons["Scikit-learn"] },
+      { name: "LLMs", icon: icons["LLMs"] },
+      { name: "OpenAI SDK", icon: icons["OpenAI SDK"] },
     ],
   },
   {
     category: "Databases",
     skills: [
-      {
-        name: "MongoDB",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mongodb/mongodb-original.svg",
-      },
-      {
-        name: "SQLite",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/sqlite/sqlite-original.svg",
-      },
-      {
-        name: "PostgreSQL",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",
-      },
-      {
-        name: "MySQL",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/mysql/mysql-original.svg",
-      },
-      {
-        name: "Firebase",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/firebase/firebase-plain.svg",
-      },
-      {
-        name: "Appwrite",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/appwrite/appwrite-original.svg",
-      },
+      { name: "MongoDB", icon: icons["MongoDB"] },
+      { name: "SQLite", icon: icons["SQLite"] },
+      { name: "PostgreSQL", icon: icons["PostgreSQL"] },
+      { name: "MySQL", icon: icons["MySQL"] },
+      { name: "Firebase", icon: icons["Firebase"] },
+      { name: "Appwrite", icon: icons["Appwrite"] },
     ],
   },
   {
     category: "Mobile Development",
-    skills: [
-      {
-        name: "Flutter",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/flutter/flutter-original.svg",
-      },
-    ],
+    skills: [{ name: "Flutter", icon: icons["Flutter"] }],
   },
   {
     category: "Tools",
     skills: [
-      {
-        name: "Git & GitHub",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",
-      },
-      {
-        name: "VS Code",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",
-      },
-      {
-        name: "Linux",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/linux/linux-original.svg",
-      },
-      {
-        name: "Jupyter",
-        icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jupyter/jupyter-original.svg",
-      },
+      { name: "Git & GitHub", icon: icons["Git & GitHub"] },
+      { name: "VS Code", icon: icons["VS Code"] },
+      { name: "Linux", icon: icons["Linux"] },
+      { name: "Jupyter", icon: icons["Jupyter"] },
     ],
   },
 ];

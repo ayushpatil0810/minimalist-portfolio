@@ -4,7 +4,8 @@ import Link from "next/link";
 import { ArrowUpRightIcon, GithubLogoIcon } from "@phosphor-icons/react";
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { techIcons, projectsData } from "@/config/projects";
+import { projectsData } from "@/config/projects";
+import { icons } from "@/config/icons";
 
 export function Projects() {
   return (
@@ -82,7 +83,7 @@ export function Projects() {
                     style={{ borderRadius: 0 }}
                   >
                     <Image
-                      src={techIcons[tech]}
+                      src={icons[tech]}
                       alt={tech}
                       width={14}
                       height={14}
