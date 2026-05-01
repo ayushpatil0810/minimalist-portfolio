@@ -1,11 +1,54 @@
 "use client";
 
+import { useState } from "react";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
+import toast from "react-hot-toast";
 
 export function ContactForm() {
+  const [loading, setLoading] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (loading) return;
+
+    setLoading(true);
+
+    const formData = new FormData(e.target);
+    formData.append(
+      "access_key",
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY as string,
+    );
+    formData.append("subject", "New Contact from Portfolio");
+    formData.append("from_name", "Portfolio Contact");
+
+    try {
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: formData,
+      });
+
+      let data = {};
+      try {
+        data = await res.json();
+      } catch {}
+
+      if (res.ok && data.success === true) {
+        toast.success("Message sent successfully.");
+        e.target.reset();
+      } else {
+        toast.error("Something went wrong. Please try again.");
+      }
+    } catch (err) {
+      toast.error("Network error. Please try again.");
+    }
+
+    setLoading(false);
+  };
+
   return (
-    <motion.section 
+    <motion.section
       initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
@@ -16,7 +59,10 @@ export function ContactForm() {
         Contact
       </h2>
 
-      <form className="space-y-5 max-w-md">
+      <form onSubmit={handleSubmit} className="space-y-5 max-w-md">
+        {/* Honeypot */}
+        <input type="checkbox" name="botcheck" style={{ display: "none" }} />
+
         <input
           type="text"
           name="name"
@@ -43,14 +89,11 @@ export function ContactForm() {
 
         <button
           type="submit"
-          className="inline-flex items-center gap-2 text-[0.875rem] tracking-tight
-           px-5 py-2.5
-           bg-foreground text-background
-           hover:gap-3.5
-           transition-all duration-200"
+          disabled={loading}
+          className="inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-5 py-2.5 bg-foreground text-background hover:gap-3.5 transition-all duration-200 disabled:opacity-50"
           style={{ borderRadius: 0 }}
         >
-          Send message
+          {loading ? "Sending..." : "Send message"}
           <ArrowUpRightIcon size={13} />
         </button>
       </form>

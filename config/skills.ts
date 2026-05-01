@@ -7,21 +7,12 @@ export const skillCategories = [
       { name: "Python", icon: icons["Python"] },
       { name: "JavaScript", icon: icons["JavaScript"] },
       { name: "TypeScript", icon: icons["TypeScript"] },
-      { name: "C / C++", icon: icons["C / C++"] },
+      { name: "C++", icon: icons["C++"] },
       { name: "Dart", icon: icons["Dart"] },
       { name: "SQL", icon: icons["SQL"] },
     ],
   },
-  {
-    category: "Frontend",
-    skills: [
-      { name: "React", icon: icons["React"] },
-      { name: "Next.js", icon: icons["Next.js"] },
-      { name: "HTML & CSS", icon: icons["HTML & CSS"] },
-      { name: "Bootstrap", icon: icons["Bootstrap"] },
-      { name: "Tailwind CSS", icon: icons["Tailwind CSS"] },
-    ],
-  },
+
   {
     category: "Backend",
     skills: [
@@ -33,14 +24,14 @@ export const skillCategories = [
     ],
   },
   {
-    category: "AI & Data Science",
+    category: "Frontend",
     skills: [
-      { name: "Pandas", icon: icons["Pandas"] },
-      { name: "NumPy", icon: icons["NumPy"] },
-      { name: "Matplotlib", icon: icons["Matplotlib"] },
-      { name: "Seaborn", icon: icons["Seaborn"] },
-      { name: "Scikit-learn", icon: icons["Scikit-learn"] },
-      { name: "OpenAI SDK", icon: icons["OpenAI SDK"] },
+      { name: "React", icon: icons["React"] },
+      { name: "HTML", icon: icons["HTML"] },
+      { name: "CSS", icon: icons["CSS"] },
+      { name: "Bootstrap", icon: icons["Bootstrap"] },
+      { name: "Tailwind CSS", icon: icons["Tailwind CSS"] },
+      { name: "Shadcn UI", icon: icons["Shadcn"] },
     ],
   },
   {
@@ -50,20 +41,39 @@ export const skillCategories = [
       { name: "SQLite", icon: icons["SQLite"] },
       { name: "PostgreSQL", icon: icons["PostgreSQL"] },
       { name: "MySQL", icon: icons["MySQL"] },
-      { name: "Firebase", icon: icons["Firebase"] },
-      { name: "Appwrite", icon: icons["Appwrite"] },
+      { name: "Redis", icon: icons["Redis"] },
     ],
   },
   {
-    category: "Mobile Development",
-    skills: [{ name: "Flutter", icon: icons["Flutter"] }],
+    category: "Frameworks",
+    skills: [
+      { name: "Flutter", icon: icons["Flutter"] },
+      { name: "Next.js", icon: icons["Next.js"] },
+      { name: "FastAPI", icon: icons["FastAPI"] },
+    ],
+  },
+
+  {
+    category: "AI & Data Science",
+    skills: [
+      { name: "NumPy", icon: icons["NumPy"] },
+      { name: "Pandas", icon: icons["Pandas"] },
+      { name: "Matplotlib", icon: icons["Matplotlib"] },
+      { name: "Seaborn", icon: icons["Seaborn"] },
+      { name: "Scikit-learn", icon: icons["Scikit-learn"] },
+      { name: "OpenAI SDK", icon: icons["OpenAI SDK"] },
+    ],
   },
   {
     category: "Tools",
     skills: [
-      { name: "Git & GitHub", icon: icons["Git & GitHub"] },
-      { name: "VS Code", icon: icons["VS Code"] },
       { name: "Linux", icon: icons["Linux"] },
+      { name: "Git", icon: icons["Git"] },
+      { name: "GitHub", icon: icons["GitHub"] },
+      { name: "Docker", icon: icons["Docker"] },
+      { name: "Postman", icon: icons["Postman"] },
+      { name: "VS Code", icon: icons["VS Code"] },
+      { name: "PyCharm", icon: icons["PyCharm"] },
       { name: "Jupyter", icon: icons["Jupyter"] },
     ],
   },
