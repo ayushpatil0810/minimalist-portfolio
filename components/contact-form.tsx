@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, type FormEvent } from "react";
 import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
@@ -8,14 +8,19 @@ import toast from "react-hot-toast";
 export function ContactForm() {
   const [loading, setLoading] = useState(false);
 
-  const handleSubmit = async (e) => {
+  type Web3FormsResponse = {
+    success?: boolean;
+  };
+
+  const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    const form = e.currentTarget;
 
     if (loading) return;
 
     setLoading(true);
 
-    const formData = new FormData(e.target);
+    const formData = new FormData(e.currentTarget);
     formData.append(
       "access_key",
       process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY as string,
@@ -29,14 +34,14 @@ export function ContactForm() {
         body: formData,
       });
 
-      let data = {};
+      let data: Web3FormsResponse = {};
       try {
         data = await res.json();
       } catch {}
 
       if (res.ok && data.success === true) {
         toast.success("Message sent successfully.");
-        e.target.reset();
+        form.reset();
       } else {
         toast.error("Something went wrong. Please try again.");
       }
