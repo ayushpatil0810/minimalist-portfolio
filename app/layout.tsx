@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://ayushpatil.in", // Replace with your actual domain
+    url: "https://ayushpatil.in",
     title: "Ayush Patil - Full Stack Software Developer",
     description:
       "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     title: "Ayush Patil - Full Stack Software Developer",
     description:
       "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
-    creator: "@ayushpatil0810", // replace if needed
+    creator: "@ayushpatil0810",
   },
   icons: {
     icon: "/favicon.ico",
@@ -78,6 +78,7 @@ export default function RootLayout({
           rel="stylesheet"
           href="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/devicon.min.css"
         />
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body className="min-h-full flex flex-col">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
