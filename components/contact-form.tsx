@@ -45,7 +45,7 @@ export function ContactForm() {
       } else {
         toast.error("Something went wrong. Please try again.");
       }
-    } catch (err) {
+    } catch {
       toast.error("Network error. Please try again.");
     }
 

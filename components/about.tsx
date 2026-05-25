@@ -1,17 +1,9 @@
-"use client";
-
-import { motion } from "framer-motion";
+import { FadeIn } from "@/components/fade-in";
 import { aboutData } from "@/config/about";
 
 export function About() {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5 }}
-      className="mb-24"
-    >
+    <FadeIn className="mb-24">
       <h2 className="text-[0.8rem] uppercase tracking-[0.15em] text-muted-foreground mb-8">
         {aboutData.title}
       </h2>
@@ -22,6 +14,6 @@ export function About() {
           </p>
         ))}
       </div>
-    </motion.section>
+    </FadeIn>
   );
 }

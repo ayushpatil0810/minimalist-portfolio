@@ -1,34 +1,20 @@
-"use client";
-
 import Link from "next/link";
-import { ArrowUpRightIcon, GithubLogoIcon } from "@phosphor-icons/react";
+import { ArrowUpRightIcon, GithubLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import Image from "next/image";
-import { motion } from "framer-motion";
 import { projectsData } from "@/config/projects";
 import { icons } from "@/config/icons";
+import { StaggerFadeIn, StaggerItem } from "@/components/stagger-fade-in";
 
 export function Projects() {
   return (
-    <motion.section 
-      initial={{ opacity: 0, y: 20 }}
-      whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5 }}
-      className="mb-24"
-    >
+    <StaggerFadeIn className="mb-24">
       <h2 className="text-[0.8rem] uppercase tracking-[0.15em] text-muted-foreground mb-8">
         Projects
       </h2>
 
       <div className="space-y-4">
         {projectsData.map((project, index) => (
-          <motion.div
-            key={project.name}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.4, delay: index * 0.1 }}
-          >
+          <StaggerItem key={project.name} index={index}>
             <div
               className="group flex flex-col items-start gap-4 p-4 -mx-4 
               border border-transparent
@@ -51,6 +37,7 @@ export function Projects() {
                       className="text-muted-foreground hover:text-foreground transition-colors"
                       title="View Source on GitHub"
                     >
+                      <span className="sr-only">View Source on GitHub</span>
                       <GithubLogoIcon size={18} />
                     </Link>
                   )}
@@ -61,6 +48,7 @@ export function Projects() {
                       className="text-muted-foreground hover:text-foreground transition-colors"
                       title="View Live Site"
                     >
+                      <span className="sr-only">View Live Site</span>
                       <ArrowUpRightIcon size={18} />
                     </Link>
                   )}
@@ -83,7 +71,7 @@ export function Projects() {
                     style={{ borderRadius: 0 }}
                   >
                     <Image
-                      src={icons[tech]}
+                      src={icons[tech] || ""}
                       alt={tech}
                       width={14}
                       height={14}
@@ -95,9 +83,9 @@ export function Projects() {
               </div>
             </div>
             </div>
-          </motion.div>
+          </StaggerItem>
         ))}
       </div>
-    </motion.section>
+    </StaggerFadeIn>
   );
 }

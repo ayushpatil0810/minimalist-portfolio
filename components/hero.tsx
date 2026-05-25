@@ -1,18 +1,12 @@
-"use client";
 import Image from "next/image";
 import Link from "next/link";
-import { motion } from "framer-motion";
 import { socials } from "@/config/socials";
-import { ReadCvLogoIcon } from "@phosphor-icons/react";
+import { ReadCvLogoIcon } from "@phosphor-icons/react/dist/ssr";
+import { FadeIn } from "@/components/fade-in";
 
 export function Hero() {
   return (
-    <motion.section
-      initial={{ opacity: 0, y: 20 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5 }}
-      className="mb-24"
-    >
+    <FadeIn className="mb-24">
       <div className="flex items-center gap-6 mb-10">
         <div className="w-28 h-28 rounded-full overflow-hidden ring-1 ring-border/40">
           <Image
@@ -59,6 +53,7 @@ export function Hero() {
               hover:border-border
               hover:scale-105"
             >
+              <span className="sr-only">{label}</span>
               <Icon size={18} weight="regular" />
             </Link>
 
@@ -88,6 +83,6 @@ export function Hero() {
           <ReadCvLogoIcon className="ml-2" />
         </Link>
       </div>
-    </motion.section>
+    </FadeIn>
   );
 }

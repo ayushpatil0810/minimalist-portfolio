@@ -4,7 +4,7 @@ import {
   EnvelopeIcon,
   XLogoIcon,
   InstagramLogoIcon,
-} from "@phosphor-icons/react";
+} from "@phosphor-icons/react/dist/ssr";
 
 export const socials = [
   {
