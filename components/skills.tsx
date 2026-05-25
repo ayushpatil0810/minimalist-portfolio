@@ -29,19 +29,26 @@ export function Skills() {
                   transition-all duration-300 ease-in-out cursor-default"
                   style={{ borderRadius: 0 }}
                 >
-                  <Image
-                    src={skill.icon || ""}
-                    alt={`${skill.name} icon`}
-                    width={20}
-                    height={20}
-                    className="w-5 h-5 shrink-0"
-                  />
-
-                  <div className="overflow-hidden transition-all duration-300 ease-in-out max-w-0 opacity-0 group-hover:max-w-[200px] group-hover:opacity-100">
-                    <span className="pl-2.5 text-[0.875rem] tracking-tight whitespace-nowrap text-foreground/85 block">
+                  {skill.icon ? (
+                    <>
+                      <Image
+                        src={skill.icon}
+                        alt={`${skill.name} icon`}
+                        width={20}
+                        height={20}
+                        className="w-5 h-5 shrink-0"
+                      />
+                      <div className="overflow-hidden transition-all duration-300 ease-in-out max-w-0 opacity-0 group-hover:max-w-[200px] group-hover:opacity-100">
+                        <span className="pl-2.5 text-[0.875rem] tracking-tight whitespace-nowrap text-foreground/85 block">
+                          {skill.name}
+                        </span>
+                      </div>
+                    </>
+                  ) : (
+                    <span className="text-[0.875rem] tracking-tight whitespace-nowrap text-foreground/85 block px-1">
                       {skill.name}
                     </span>
-                  </div>
+                  )}
                 </SkillStaggerItem>
               ))}
             </div>

@@ -20,19 +20,19 @@ export function Hero() {
         </div>
         <div className="flex flex-col">
           <span className="text-[2rem] tracking-tight">Ayush Patil</span>
-          <div className="flex items-center gap-2 mt-1 text-[0.8rem] text-muted-foreground">
-            <span>Full Stack Engineer</span>
-            <span className="opacity-30">·</span>
-            <span>Exploring AI / ML</span>
+          <div className="flex items-center gap-2 mt-2 text-muted-foreground">
+            <span className="text-[1.1rem] font-semibold">
+              Software Engineer
+            </span>
           </div>
         </div>
       </div>
 
-      <h1 className="text-[1.75rem] md:text-[2rem] tracking-tight leading-[1.3] mb-6">
-        I build full stack applications,
+      <h1 className="text-[2rem] md:text-[2.5rem] tracking-tight leading-[1.2] mb-8 font-medium">
+        Mostly backend. Occasionally frontend.
         <br />
         <span className="text-muted-foreground">
-          with a focus on backend architecture.
+          Always obsessed with system design.
         </span>
       </h1>
 
@@ -47,11 +47,10 @@ export function Hero() {
               border border-border/40 
               bg-muted/40 
               text-muted-foreground
-              transition-all duration-300
+              transition-colors duration-300
               hover:text-foreground
               hover:bg-muted
-              hover:border-border
-              hover:scale-105"
+              hover:border-border"
             >
               <span className="sr-only">{label}</span>
               <Icon size={18} weight="regular" />

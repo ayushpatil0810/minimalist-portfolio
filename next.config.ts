@@ -14,13 +14,16 @@ const nextConfig: NextConfig = {
     ],
   },
   async headers() {
+    const isDev = process.env.NODE_ENV === "development";
+    const scriptSrc = `script-src 'self' 'unsafe-inline' https://cdn.vercel-insights.com${isDev ? " 'unsafe-eval'" : ""}`;
+    
     return [
       {
         source: "/(.*)",
         headers: [
           {
             key: "Content-Security-Policy",
-            value: "default-src 'self'; script-src 'self' 'unsafe-inline' https://cdn.vercel-insights.com; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://avatars.githubusercontent.com https://cdn.jsdelivr.net https://upload.wikimedia.org https://seaborn.pydata.org https://neon.com https://cdn.brandfetch.io https://better-auth.com; connect-src 'self' https://api.web3forms.com; font-src 'self';",
+            value: `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://avatars.githubusercontent.com https://cdn.jsdelivr.net https://upload.wikimedia.org https://seaborn.pydata.org https://neon.com https://cdn.brandfetch.io https://better-auth.com; connect-src 'self' https://api.web3forms.com; font-src 'self';`,
           },
         ],
       },

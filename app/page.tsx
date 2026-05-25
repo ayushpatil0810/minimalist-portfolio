@@ -5,12 +5,13 @@ import { About } from "@/components/about";
 import { ContactForm } from "@/components/contact-form";
 import { SiteFooter } from "@/components/site-footer";
 import { Skills } from "@/components/skills";
+import { RabbitHoles } from "@/components/rabbit-holes";
+import { GoToTop } from "@/components/go-to-top";
 
 export default function App() {
   return (
     <div
-      className="min-h-screen bg-background text-foreground transition-colors duration-500"
-      style={{ fontFamily: "'Poppins', sans-serif" }}
+      className="min-h-screen bg-background text-foreground transition-colors duration-500 font-sans"
     >
       <ThemeToggle />
 
@@ -19,9 +20,12 @@ export default function App() {
         <Projects />
         <About />
         <Skills />
+        <RabbitHoles />
         <ContactForm />
         <SiteFooter />
       </main>
+      
+      <GoToTop />
     </div>
   );
 }
