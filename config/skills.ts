@@ -1,6 +1,16 @@
 import { icons } from "./icons";
 
-export const skillCategories = [
+export type Skill = {
+  name: string;
+  icon?: string | undefined;
+};
+
+export type SkillCategory = {
+  category: string;
+  skills: Skill[];
+};
+
+export const skillCategories: SkillCategory[] = [
   {
     category: "Languages",
     skills: [
