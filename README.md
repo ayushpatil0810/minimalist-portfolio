@@ -1,36 +1,92 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Minimalist Portfolio
+
+A minimalist, content-driven portfolio built with Next.js 16 and React 19. The site focuses on clean typography, subtle motion, and a backend-first aesthetic with a single-page layout plus a dedicated resume page.
+
+## Features
+
+- Single-page homepage with sections for hero, projects, about, skills, rabbit holes, contact, and footer
+- Dedicated /resume page with embedded PDF
+- Light/dark theme toggle (system-aware)
+- Motion and staggered reveals via Framer Motion
+- Contact form powered by Web3Forms
+- SEO metadata, sitemap, and robots.txt
+- Strict CSP headers with allowed image domains
+
+## Tech Stack
+
+- Next.js 16.2.4 (App Router)
+- React 19.2.4
+- Tailwind CSS v4 + shadcn UI styles
+- Framer Motion
+- next-themes
+- Phosphor Icons
+- Vercel Analytics + Speed Insights
+
+## Project Structure
+
+- app/ - App Router pages, layout, and global styles
+  - page.tsx - Homepage composition
+  - resume/page.tsx - Resume page with embedded PDF
+  - layout.tsx - Metadata, fonts, theme provider
+  - globals.css - Theme tokens and base styles
+  - sitemap.ts, robots.ts - SEO routes
+- components/ - UI and section components
+- config/ - Content configuration (about, projects, skills, socials, icons)
+- public/ - Static assets (tech stack icons, resume PDF)
 
 ## Getting Started
 
-First, run the development server:
+1. Install dependencies:
+
+```bash
+npm install
+```
+
+2. Create a .env.local file and add the required environment variables (see below).
+
+3. Start the dev server:
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Open http://localhost:3000.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Environment Variables
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The contact form posts to Web3Forms and requires a public access key:
 
-## Learn More
+```
+NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY=your_key_here
+```
 
-To learn more about Next.js, take a look at the following resources:
+## Scripts
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- npm run dev - Start the dev server
+- npm run build - Production build
+- npm run start - Start the production server
+- npm run lint - Run ESLint
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Customization
 
-## Deploy on Vercel
+- Update personal content in the config files:
+  - config/about.ts
+  - config/projects.ts
+  - config/skills.ts
+  - config/socials.ts
+- Update metadata and social previews in app/layout.tsx
+- Replace the avatar URL in components/hero.tsx
+- Replace the resume PDF at public/resume.pdf
+- Adjust allowed image domains in next.config.ts if you change external assets
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Security Notes
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- A Content Security Policy is set in next.config.ts. If you add new external assets or APIs, update the CSP and image domains accordingly.
+
+## Deployment
+
+This project is ready for Vercel. For other platforms, ensure Node.js 18+ and build with npm run build.
+
+## License
+
+MIT
