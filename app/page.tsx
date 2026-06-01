@@ -1,4 +1,3 @@
-import { ThemeToggle } from "@/components/theme-toggle";
 import { Hero } from "@/components/hero";
 import { Projects } from "@/components/projects";
 import { About } from "@/components/about";
@@ -7,16 +6,18 @@ import { SiteFooter } from "@/components/site-footer";
 import { Skills } from "@/components/skills";
 import { RabbitHoles } from "@/components/rabbit-holes";
 import { GoToTop } from "@/components/go-to-top";
+import { Nav } from "@/components/nav";
+import { GithubActivity } from "@/components/github-activity";
 
 export default function App() {
   return (
     <div
       className="min-h-screen bg-background text-foreground transition-colors duration-500 font-sans"
     >
-      <ThemeToggle />
-
-      <main className="max-w-2xl mx-auto px-6 py-24">
+      <main className="max-w-2xl mx-auto px-6 pt-6 pb-12 md:pt-10 md:pb-24">
+        <Nav />
         <Hero />
+        <GithubActivity />
         <Projects />
         <About />
         <Skills />

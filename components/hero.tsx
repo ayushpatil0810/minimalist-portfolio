@@ -22,7 +22,7 @@ export function Hero() {
           <span className="text-[2rem] tracking-tight">Ayush Patil</span>
           <div className="flex items-center gap-2 mt-2 text-muted-foreground">
             <span className="text-[1.1rem] font-semibold">
-              Software Engineer
+              Full Stack Engineer
             </span>
           </div>
         </div>
@@ -43,17 +43,13 @@ export function Hero() {
             <Link
               href={href}
               target="_blank"
-              className="flex items-center justify-center w-10 h-10 
-              border border-border/40 
-              bg-muted/40 
+              className="flex items-center justify-center w-12 h-12 
               text-muted-foreground
               transition-colors duration-300
-              hover:text-foreground
-              hover:bg-muted
-              hover:border-border"
+              hover:text-foreground"
             >
               <span className="sr-only">{label}</span>
-              <Icon size={18} weight="regular" />
+              <Icon size={24} weight="regular" />
             </Link>
 
             {/* Tooltip */}

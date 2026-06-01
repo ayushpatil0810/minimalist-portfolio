@@ -78,6 +78,7 @@ export const skillCategories: SkillCategory[] = [
       { name: "Git", icon: icons["Git"] },
       { name: "GitHub", icon: icons["GitHub"] },
       { name: "Docker", icon: icons["Docker"] },
+      { name: "Kubernetes", icon: icons["Kubernetes"] },
       { name: "Postman", icon: icons["Postman"] },
     ],
   },

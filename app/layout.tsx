@@ -1,5 +1,10 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono, Hanken_Grotesk } from "next/font/google";
+import {
+  Geist,
+  Geist_Mono,
+  Hanken_Grotesk,
+  JetBrains_Mono,
+} from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -7,7 +12,10 @@ import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const hankenGrotesk = Hanken_Grotesk({ subsets: ["latin"], variable: "--font-sans" });
+const hankenGrotesk = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-sans",
+});
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -20,14 +28,16 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Ayush Patil - Software Engineer",
+  title: "Ayush Patil - Full Stack Engineer",
   description:
-    "Portfolio of Ayush Patil, a Software Engineer exploring AI & Machine Learning. I build fast, scalable applications.",
+    "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning. I build fast, scalable applications.",
   keywords: [
     "Ayush Patil",
     "Portfolio",
     "Full Stack Developer",
+    "Full Stack Engineer",
     "Software Engineer",
+    "Devops",
     "Backend Engineer",
     "Backend Developer",
     "AI/ML",
@@ -41,16 +51,16 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://ayushpatil.in",
-    title: "Ayush Patil - Software Engineer",
+    title: "Ayush Patil - Full Stack Engineer",
     description:
-      "Portfolio of Ayush Patil, a Software Engineer exploring AI & Machine Learning.",
+      "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
     siteName: "Ayush Patil Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ayush Patil - Software Engineer",
+    title: "Ayush Patil - Full Stack Engineer",
     description:
-      "Portfolio of Ayush Patil, a Software Engineer exploring AI & Machine Learning.",
+      "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
     creator: "@ayushpatil0810",
   },
   icons: {
