@@ -3,6 +3,8 @@ import Link from "next/link";
 import { socials } from "@/config/socials";
 import { ReadCvLogoIcon } from "@phosphor-icons/react/dist/ssr";
 import { FadeIn } from "@/components/fade-in";
+import { openToWork } from "@/config/experience";
+
 
 export function Hero() {
   return (
@@ -25,6 +27,11 @@ export function Hero() {
               Full Stack Engineer
             </span>
           </div>
+          {openToWork.active && (
+              <span className="text-[0.8rem] text-muted-foreground/60 mt-1.5 tracking-tight">
+                {openToWork.label}
+              </span>
+            )}
         </div>
       </div>
 

@@ -22,11 +22,10 @@ export function GithubActivity() {
 
   return (
     <FadeIn className="mb-24">
-      <h2 className="text-xl font-medium tracking-tight mb-4 uppercase">
+      <h2 className="text-[0.75rem] uppercase tracking-[0.2em] text-muted-foreground/60 mb-10">
         Activity
       </h2>
-      <p className="text-muted-foreground mb-6">GitHub contributions for {new Date().getFullYear()}.</p>
-      <div className="overflow-x-auto w-full pb-4 min-h-[150px]">
+      <div className="overflow-x-auto w-full pb-3 min-h-[150px] scrollbar-thin">
         {mounted ? (
           <GitHubCalendar
             username="ayushpatil0810"

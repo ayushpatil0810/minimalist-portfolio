@@ -23,7 +23,7 @@ const nextConfig: NextConfig = {
         headers: [
           {
             key: "Content-Security-Policy",
-            value: `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://avatars.githubusercontent.com https://cdn.jsdelivr.net https://upload.wikimedia.org https://seaborn.pydata.org https://neon.com https://cdn.brandfetch.io https://better-auth.com; connect-src 'self' https://api.web3forms.com https://github-contributions-api.jogruber.de; font-src 'self';`,
+            value: `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://avatars.githubusercontent.com https://cdn.jsdelivr.net https://upload.wikimedia.org https://seaborn.pydata.org https://neon.com https://cdn.brandfetch.io https://better-auth.com; connect-src 'self' https://api.web3forms.com https://github-contributions-api.jogruber.de; font-src 'self'; frame-src https://drive.google.com;`,
           },
         ],
       },

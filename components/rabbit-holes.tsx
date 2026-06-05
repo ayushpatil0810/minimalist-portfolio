@@ -3,9 +3,8 @@ import { aboutData } from "@/config/about";
 import { ArrowBendDownRight } from "@phosphor-icons/react/dist/ssr";
 
 export function RabbitHoles() {
-  // @ts-ignore - added to config dynamically
-  const holes = aboutData.rabbitHoles || [];
-  
+  const holes = aboutData.rabbitHoles ?? [];
+
   if (holes.length === 0) return null;
 
   return (

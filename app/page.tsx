@@ -14,8 +14,8 @@ export default function App() {
     <div
       className="min-h-screen bg-background text-foreground transition-colors duration-500 font-sans"
     >
-      <main className="max-w-2xl mx-auto px-6 pt-6 pb-12 md:pt-10 md:pb-24">
-        <Nav />
+      <Nav />
+      <main className="max-w-2xl mx-auto px-6 pt-8 pb-12 md:pb-24">
         <Hero />
         <GithubActivity />
         <Projects />
