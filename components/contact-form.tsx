@@ -5,25 +5,24 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { motion } from "framer-motion";
 import toast from "react-hot-toast";
 
+type Web3FormsResponse = {
+  success?: boolean;
+};
+
 export function ContactForm() {
   const [loading, setLoading] = useState(false);
-
-  type Web3FormsResponse = {
-    success?: boolean;
-  };
 
   const handleSubmit = async (e: FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = e.currentTarget;
 
     if (loading) return;
-
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
     formData.append(
       "access_key",
-      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY as string,
+      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "",
     );
     formData.append("subject", "New Contact from Portfolio");
     formData.append("from_name", "Portfolio Contact");
@@ -58,50 +57,85 @@ export function ContactForm() {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
       transition={{ duration: 0.5 }}
-      className="mb-16"
+      className="mb-20"
     >
-      <h2 className="text-[0.8rem] uppercase tracking-[0.15em] text-muted-foreground mb-8">
-        Contact
-      </h2>
+      <div className="flex items-end gap-3 mb-10">
+        <h2 className="text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground/60 font-mono">
+          Get in Touch
+        </h2>
+        <div className="flex-1 border-t border-border/40" />
+      </div>
 
-      <form onSubmit={handleSubmit} className="space-y-5 max-w-md">
-        {/* Honeypot */}
-        <input type="checkbox" name="botcheck" style={{ display: "none" }} />
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-10 items-start">
+        {/* Left: copy */}
+        <div className="flex flex-col gap-3">
+          <p className="text-[0.95rem] leading-relaxed text-foreground/80">
+            I&apos;m currently open to interesting projects and conversations.
+            Whether you have a question, an opportunity, or just want to say hi.
+            My inbox is open.
+          </p>
+          <p className="text-[0.82rem] text-muted-foreground font-mono">
+            ayushppatil2006@gmail.com
+          </p>
+        </div>
 
-        <input
-          type="text"
-          name="name"
-          placeholder="Your name"
-          required
-          className="w-full bg-transparent border-b border-border/50 py-2 text-[0.9rem] outline-none placeholder:text-muted-foreground/60 focus:border-foreground transition-colors duration-300"
-        />
+        {/* Right: form */}
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Honeypot */}
+          <input type="checkbox" name="botcheck" style={{ display: "none" }} />
 
-        <input
-          type="email"
-          name="email"
-          placeholder="Your email"
-          required
-          className="w-full bg-transparent border-b border-border/50 py-2 text-[0.9rem] outline-none placeholder:text-muted-foreground/60 focus:border-foreground transition-colors duration-300"
-        />
+          <div className="flex flex-col gap-1">
+            <label htmlFor="contact-name" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+              Name
+            </label>
+            <input
+              type="text"
+              id="contact-name"
+              name="name"
+              placeholder="Your name"
+              required
+              className="w-full bg-transparent border-b border-border/60 py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 focus:border-foreground transition-colors duration-200"
+            />
+          </div>
 
-        <textarea
-          name="message"
-          rows={4}
-          placeholder="Your message"
-          required
-          className="w-full bg-transparent border-b border-border/50 py-2 text-[0.9rem] outline-none placeholder:text-muted-foreground/60 focus:border-foreground transition-colors duration-300 resize-none"
-        />
+          <div className="flex flex-col gap-1">
+            <label htmlFor="contact-email" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+              Email
+            </label>
+            <input
+              type="email"
+              id="contact-email"
+              name="email"
+              placeholder="you@example.com"
+              required
+              className="w-full bg-transparent border-b border-border/60 py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 focus:border-foreground transition-colors duration-200"
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-5 py-2.5 bg-foreground text-background hover:gap-3.5 transition-all duration-200 disabled:opacity-50"
-          style={{ borderRadius: 0 }}
-        >
-          {loading ? "Sending..." : "Send message"}
-          <ArrowUpRightIcon size={13} />
-        </button>
-      </form>
+          <div className="flex flex-col gap-1">
+            <label htmlFor="contact-message" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+              Message
+            </label>
+            <textarea
+              id="contact-message"
+              name="message"
+              rows={4}
+              placeholder="What's on your mind?"
+              required
+              className="w-full bg-transparent border-b border-border/60 py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 focus:border-foreground transition-colors duration-200 resize-none"
+            />
+          </div>
+
+          <button
+            type="submit"
+            disabled={loading}
+            className="inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-5 py-2.5 bg-foreground text-background hover:bg-foreground/85 transition-all duration-200 disabled:opacity-50 font-medium"
+          >
+            {loading ? "Sending…" : "Send message"}
+            <ArrowUpRightIcon size={13} />
+          </button>
+        </form>
+      </div>
     </motion.section>
   );
 }

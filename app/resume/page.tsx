@@ -1,25 +1,37 @@
-"use client";
-
 import { Nav } from "@/components/nav";
 import { SiteFooter } from "@/components/site-footer";
 import { GoToTop } from "@/components/go-to-top";
-import { ArrowLeftIcon } from "@phosphor-icons/react";
-import { useRouter } from "next/navigation";
+import { BackButton } from "@/components/back-button";
 import { resumeURL } from "@/config/resume";
-export default function ResumePage() {
-  const router = useRouter();
 
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Resume",
+  description: "View my resume and work experience.",
+  alternates: {
+    canonical: "/resume",
+  },
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://ayushpatil.in/resume",
+    title: "Resume | Ayush Patil",
+    description: "View my resume and work experience.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Resume | Ayush Patil",
+    description: "View my resume and work experience.",
+  },
+};
+
+export default function ResumePage() {
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-500 font-sans flex flex-col">
       <Nav />
       <main className="max-w-4xl w-full mx-auto px-6 pt-8 pb-12 md:pb-24 flex flex-col gap-4 flex-1">
-        <button
-          onClick={() => router.back()}
-          className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
-        >
-          <ArrowLeftIcon size={16} />
-          Go back
-        </button>
+        <BackButton />
 
         <h1 className="text-3xl font-bold tracking-tight">Resume</h1>
 

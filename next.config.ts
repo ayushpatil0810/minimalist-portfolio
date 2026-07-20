@@ -1,7 +1,9 @@
 import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
-  /* config options here */
+  experimental: {
+    viewTransition: true,
+  },
   images: {
     remotePatterns: [
       { protocol: "https", hostname: "avatars.githubusercontent.com" },
@@ -16,14 +18,14 @@ const nextConfig: NextConfig = {
   async headers() {
     const isDev = process.env.NODE_ENV === "development";
     const scriptSrc = `script-src 'self' 'unsafe-inline' https://cdn.vercel-insights.com https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ""}`;
-    
+
     return [
       {
         source: "/(.*)",
         headers: [
           {
             key: "Content-Security-Policy",
-            value: `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net; img-src 'self' data: https://avatars.githubusercontent.com https://cdn.jsdelivr.net https://upload.wikimedia.org https://seaborn.pydata.org https://neon.com https://cdn.brandfetch.io https://better-auth.com; connect-src 'self' https://api.web3forms.com https://github-contributions-api.jogruber.de; font-src 'self'; frame-src https://drive.google.com;`,
+            value: `default-src 'self'; ${scriptSrc}; style-src 'self' 'unsafe-inline' https://cdn.jsdelivr.net https://fonts.googleapis.com; img-src 'self' data: blob: https://avatars.githubusercontent.com https://cdn.jsdelivr.net https://upload.wikimedia.org https://seaborn.pydata.org https://neon.com https://cdn.brandfetch.io https://better-auth.com; connect-src 'self' https://api.web3forms.com https://github-contributions-api.jogruber.de https://va.vercel-scripts.com https://cdn.vercel-insights.com; font-src 'self' https://fonts.gstatic.com data:; frame-src https://drive.google.com;`,
           },
         ],
       },

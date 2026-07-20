@@ -1,45 +1,163 @@
 "use client";
 
-import { GitHubCalendar } from "react-github-calendar";
 import { useTheme } from "next-themes";
-import { FadeIn } from "@/components/fade-in";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
+import { motion } from "framer-motion";
+import dynamic from "next/dynamic";
+
+const GitHubCalendar = dynamic(
+  () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
+  {
+    ssr: false,
+    loading: () => <div className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse" />,
+  }
+);
+
+const USERNAME = "ayushpatil0810";
+
+type ContribDay = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
+
+function StatPill({ label, value }: { label: string; value: string | number }) {
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 8 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.4 }}
+      className="flex flex-col gap-0.5"
+    >
+      <span className="text-[1.1rem] font-semibold tracking-tight tabular-nums text-foreground">
+        {value}
+      </span>
+      <span className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">
+        {label}
+      </span>
+    </motion.div>
+  );
+}
+
+function computeStats(data: ContribDay[]) {
+  const total = data.reduce((s, d) => s + d.count, 0);
+
+  // Longest streak
+  let maxStreak = 0;
+  let cur = 0;
+  for (const d of data) {
+    if (d.count > 0) {
+      cur++;
+      maxStreak = Math.max(maxStreak, cur);
+    } else {
+      cur = 0;
+    }
+  }
+
+  // Most active day of week
+  const byDay: Record<string, number> = {
+    Sun: 0, Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0,
+  };
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  for (const d of data) {
+    if (d.count > 0) {
+      const dayIdx = new Date(d.date).getDay();
+      const dow = dayNames[dayIdx] || "Sun";
+      byDay[dow] = (byDay[dow] || 0) + d.count;
+    }
+  }
+  const mostActive = Object.entries(byDay).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "-";
+
+  return { total, maxStreak, mostActive };
+}
+
+// Warm stone palette, amber at max level
+const explicitTheme = {
+  light: ["#f5f5f4", "#d6d3d1", "#a8a29e", "#78716c", "#f59e0b"],
+  dark: ["#1c1917", "#44403c", "#78716c", "#a8a29e", "#f59e0b"],
+};
 
 export function GithubActivity() {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [stats, setStats] = useState<{
+    total: number;
+    maxStreak: number;
+    mostActive: string;
+  } | null>(null);
+
+  // Guard against calling setStats during another render cycle
+  const statsSetRef = useRef(false);
 
   useEffect(() => {
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
+  const isDark = currentTheme === "dark";
 
-  const explicitTheme = {
-    light: ['#f4f4f5', '#9ca3af', '#6b7280', '#4b5563', '#111827'],
-    dark: ['#27272a', '#6b7280', '#9ca3af', '#d1d5db', '#f9fafb'],
-  };
+  // transformData is called synchronously during render by the library.
+  // We use a ref to defer the setState to after paint, preventing the
+  // "setState during render" warning and infinite loop.
+  const transformData = useCallback(
+    (data: ContribDay[]) => {
+      if (!statsSetRef.current) {
+        statsSetRef.current = true;
+        // Defer the setState to avoid updating state during a render
+        setTimeout(() => {
+          setStats(computeStats(data));
+        }, 0);
+      }
+      return data;
+    },
+    [], // stable reference
+  );
 
   return (
-    <FadeIn className="mb-24">
-      <h2 className="text-[0.75rem] uppercase tracking-[0.2em] text-muted-foreground/60 mb-10">
-        Activity
-      </h2>
-      <div className="overflow-x-auto w-full pb-3 min-h-[150px] scrollbar-thin">
-        {mounted ? (
-          <GitHubCalendar
-            username="ayushpatil0810"
-            year={new Date().getFullYear()}
-            colorScheme={currentTheme === "dark" ? "dark" : "light"}
-            theme={explicitTheme}
-            blockSize={12}
-            blockMargin={4}
-            fontSize={14}
-          />
-        ) : (
-          <div className="w-full h-[120px] bg-muted/10 animate-pulse rounded-md" />
+    <motion.section
+      initial={{ opacity: 0, y: 20 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true, margin: "-80px" }}
+      transition={{ duration: 0.5 }}
+      className="mb-24"
+    >
+      {/* Header row with stats */}
+      <div className="flex items-end justify-between mb-6 flex-wrap gap-4">
+        <h2 className="text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground/60 font-mono">
+          Activity
+        </h2>
+        {stats && (
+          <div className="flex items-end gap-8">
+            <StatPill label="contributions" value={stats.total} />
+            <StatPill label="longest streak" value={`${stats.maxStreak}d`} />
+            <StatPill label="most active" value={stats.mostActive} />
+          </div>
         )}
       </div>
-    </FadeIn>
+
+      {/* Heatmap */}
+      <div className="overflow-x-auto w-full pb-2 scrollbar-thin">
+        {mounted ? (
+          <GitHubCalendar
+            username={USERNAME}
+            year={new Date().getFullYear()}
+            colorScheme={isDark ? "dark" : "light"}
+            theme={explicitTheme}
+            blockSize={11}
+            blockMargin={3}
+            blockRadius={2}
+            fontSize={11}
+            transformData={transformData as (data: ContribDay[]) => ContribDay[]}
+            labels={{
+              totalCount: "{{count}} contributions in {{year}}",
+            }}
+            style={{
+              color: isDark ? "#a8a29e" : "#78716c",
+            }}
+            showTotalCount={false}
+          />
+        ) : (
+          <div className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse" />
+        )}
+      </div>
+    </motion.section>
   );
 }

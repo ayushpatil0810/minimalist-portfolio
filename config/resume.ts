@@ -1,1 +1,1 @@
-export const resumeURL = "https://drive.google.com/file/d/1AGO81M9NUslYKPuRoxgXxNk3Kuw7bBh2/preview"
+export const resumeURL = "https://drive.google.com/file/d/1AGO81M9NUslYKPuRoxgXxNk3Kuw7bBh2/preview" as const;

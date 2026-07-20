@@ -1,10 +1,5 @@
 import type { Metadata } from "next";
-import {
-  Geist,
-  Geist_Mono,
-  Hanken_Grotesk,
-  JetBrains_Mono,
-} from "next/font/google";
+import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
@@ -12,25 +7,37 @@ import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 
-const hankenGrotesk = JetBrains_Mono({
+const syne = Syne({
+  variable: "--font-syne",
   subsets: ["latin"],
-  variable: "--font-sans",
+  display: "swap",
+  weight: ["400", "500", "600", "700", "800"],
 });
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const dmSans = DM_Sans({
+  variable: "--font-dm-sans",
   subsets: ["latin"],
+  display: "swap",
+  weight: ["300", "400", "500", "600"],
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const jetbrainsMono = JetBrains_Mono({
+  variable: "--font-jetbrains-mono",
   subsets: ["latin"],
+  display: "swap",
 });
 
 export const metadata: Metadata = {
-  title: "Ayush Patil - Full Stack Engineer",
+  metadataBase: new URL("https://ayushpatil.in"),
+  title: {
+    default: "Ayush Patil, Full Stack Engineer",
+    template: "%s | Ayush Patil",
+  },
   description:
     "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning. I build fast, scalable applications.",
+  alternates: {
+    canonical: "/",
+  },
   keywords: [
     "Ayush Patil",
     "Portfolio",
@@ -51,14 +58,14 @@ export const metadata: Metadata = {
     type: "website",
     locale: "en_US",
     url: "https://ayushpatil.in",
-    title: "Ayush Patil - Full Stack Engineer",
+    title: "Ayush Patil, Full Stack Engineer",
     description:
       "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
     siteName: "Ayush Patil Portfolio",
   },
   twitter: {
     card: "summary_large_image",
-    title: "Ayush Patil - Full Stack Engineer",
+    title: "Ayush Patil, Full Stack Engineer",
     description:
       "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
     creator: "@ayushpatil0810",
@@ -79,20 +86,27 @@ export default function RootLayout({
       className={cn(
         "h-full",
         "antialiased",
-        geistSans.variable,
-        geistMono.variable,
-        "font-sans",
-        hankenGrotesk.variable,
+        syne.variable,
+        dmSans.variable,
+        jetbrainsMono.variable,
       )}
       suppressHydrationWarning
     >
-      <head>
-        <link rel="icon" href="/favicon.ico" sizes="any" />
-      </head>
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
-          <Toaster position="bottom-right" />
+          <Toaster
+            position="bottom-right"
+            toastOptions={{
+              style: {
+                background: "var(--card)",
+                color: "var(--foreground)",
+                border: "1px solid var(--border)",
+                borderRadius: "0.25rem",
+                fontSize: "0.85rem",
+              },
+            }}
+          />
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

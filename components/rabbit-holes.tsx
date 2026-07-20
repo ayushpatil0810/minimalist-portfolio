@@ -1,27 +1,30 @@
-import { StaggerFadeIn, StaggerItem } from "@/components/stagger-fade-in";
 import { aboutData } from "@/config/about";
-import { ArrowBendDownRight } from "@phosphor-icons/react/dist/ssr";
+import { FadeUpSection, HoleAnimation } from "@/components/about-animations";
 
 export function RabbitHoles() {
   const holes = aboutData.rabbitHoles ?? [];
-
   if (holes.length === 0) return null;
 
   return (
-    <StaggerFadeIn className="mb-24">
-      <h2 className="text-[0.75rem] uppercase tracking-[0.2em] text-muted-foreground/60 mb-8">
-        Recent Rabbit Holes
-      </h2>
-      <div className="flex flex-col gap-3">
-        {holes.map((hole: string, index: number) => (
-          <StaggerItem key={index} index={index}>
-            <div className="flex items-center gap-3 text-foreground/80 hover:text-foreground transition-colors group">
-              <ArrowBendDownRight className="text-muted-foreground/50 group-hover:text-foreground/70 transition-colors" size={16} />
-              <span className="text-[0.95rem]">{hole}</span>
-            </div>
-          </StaggerItem>
+    <FadeUpSection className="mb-24">
+      <div className="flex items-end gap-3 mb-8">
+        <h2 className="text-[0.7rem] uppercase tracking-[0.2em] text-muted-foreground/60 font-mono">
+          Recent Rabbit Holes
+        </h2>
+        <div className="flex-1 border-t border-border/40" />
+      </div>
+
+      <div className="flex flex-wrap gap-2">
+        {holes.map((hole, i) => (
+          <HoleAnimation
+            key={i}
+            index={i}
+            className="inline-flex items-center px-3 py-1.5 border border-border/70 text-[0.78rem] text-foreground/75 font-mono hover:border-border hover:text-foreground transition-all duration-200"
+          >
+            {hole}
+          </HoleAnimation>
         ))}
       </div>
-    </StaggerFadeIn>
+    </FadeUpSection>
   );
 }

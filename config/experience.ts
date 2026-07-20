@@ -1,4 +1,4 @@
 export const openToWork = {
   active: true,
-  label: "looking for internship roles",
-};
+  label: "available for software engineering roles",
+} as const;
