@@ -26,7 +26,7 @@ export function ProjectCard({
         duration: 0.5,
         delay: index * 0.07,
       }}
-      whileHover={{ scale: 1.003 }}
+      whileHover={{ scale: 1.008 }}
       whileTap={{ scale: 0.99 }}
       className={`${featured ? "md:col-span-2" : ""} cursor-pointer`}
       style={{ willChange: "transform" }}

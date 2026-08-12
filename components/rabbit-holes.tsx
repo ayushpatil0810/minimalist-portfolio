@@ -19,7 +19,7 @@ export function RabbitHoles() {
           <HoleAnimation
             key={i}
             index={i}
-            className="inline-flex items-center px-3 py-1.5 border border-border/70 text-[0.78rem] text-foreground/75 font-mono hover:border-border hover:text-foreground transition-all duration-200"
+            className="inline-flex items-center px-3 py-1.5 border border-border/70 text-[0.78rem] text-foreground/75 font-mono hover:border-border hover:text-foreground transition-[border-color,color] duration-200"
           >
             {hole}
           </HoleAnimation>

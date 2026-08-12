@@ -168,6 +168,12 @@
 }
 
 /* ─── Utilities ──────────────────────────────────────────── */
+/* ─── Easing Tokens ──────────────────────────────────────── */
+:root {
+  --ease-out: cubic-bezier(0.23, 1, 0.32, 1);       /* strong ease-out for enters/exits */
+  --ease-in-out: cubic-bezier(0.77, 0, 0.175, 1);   /* strong ease-in-out for on-screen movement */
+}
+
 @layer utilities {
   .scrollbar-thin {
     scrollbar-width: thin;
@@ -198,11 +204,12 @@
 /* ─── View Transition Keyframes ──────────────────────────── */
 
 /* Default page enter/exit — tighter, more decisive (Apple: small purposeful displacement) */
+/* exits: ease-out (starts fast = feels responsive); enters: ease-out (same) */
 ::view-transition-old(root) {
-  animation: 160ms ease-in both vt-fade-out;
+  animation: 160ms var(--ease-out) both vt-fade-out;
 }
 ::view-transition-new(root) {
-  animation: 240ms ease-out 160ms both vt-fade-in;
+  animation: 240ms var(--ease-out) 160ms both vt-fade-in;
 }
 
 @keyframes vt-fade-out {
@@ -245,18 +252,18 @@
 
 /* Nav-forward directional slide — smaller displacement, symmetric with back */
 ::view-transition-old(.nav-forward) {
-  animation: 150ms ease-in both vt-slide-out-left;
+  animation: 150ms var(--ease-out) both vt-slide-out-left;
 }
 ::view-transition-new(.nav-forward) {
-  animation: 240ms ease-out 150ms both vt-slide-in-right;
+  animation: 240ms var(--ease-out) 150ms both vt-slide-in-right;
 }
 
 /* Nav-back directional slide */
 ::view-transition-old(.nav-back) {
-  animation: 150ms ease-in both vt-slide-out-right;
+  animation: 150ms var(--ease-out) both vt-slide-out-right;
 }
 ::view-transition-new(.nav-back) {
-  animation: 240ms ease-out 150ms both vt-slide-in-left;
+  animation: 240ms var(--ease-out) 150ms both vt-slide-in-left;
 }
 
 @keyframes vt-slide-out-left {

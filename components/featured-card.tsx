@@ -20,7 +20,7 @@ export function FeaturedCard({
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
       transition={{ type: "spring", bounce: 0, duration: 0.5, delay: index * 0.08 }}
-      whileHover={{ scale: 1.003 }}
+      whileHover={{ scale: 1.008 }}
       whileTap={{ scale: 0.99 }}
       // Card hover/tap uses a spring for interruptibility
       // (Framer Motion applies the whileHover/whileTap spring to the element itself)

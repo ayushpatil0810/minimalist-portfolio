@@ -58,11 +58,12 @@ export function ContactForm() {
   };
 
   return (
+    // Plan 004: spring scroll-reveal (was plain tween duration:0.5)
     <motion.section
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5 }}
+      transition={{ type: "spring", bounce: 0, duration: 0.5 }}
       className="mb-20"
     >
       <div className="flex items-end gap-3 mb-10">
@@ -137,14 +138,18 @@ export function ContactForm() {
             />
           </div>
 
-          <button
+          {/* Plan 002: transition-all → transition-colors (was animating all props off-GPU) */}
+          {/* Plan 007 (missed opp): whileTap press feedback — every other CTA has it */}
+          <motion.button
             type="submit"
             disabled={loading}
-            className="inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-5 py-2.5 bg-foreground text-background hover:bg-foreground/85 transition-all duration-200 disabled:opacity-50 font-medium"
+            whileTap={!loading ? { scale: 0.97 } : undefined}
+            transition={{ type: "spring", bounce: 0, duration: 0.15 }}
+            className="inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-5 py-2.5 bg-foreground text-background hover:bg-foreground/85 transition-colors duration-200 disabled:opacity-50 font-medium"
           >
             {loading ? "Sending…" : "Send message"}
             <ArrowUpRightIcon size={13} />
-          </button>
+          </motion.button>
         </form>
       </div>
     </motion.section>
