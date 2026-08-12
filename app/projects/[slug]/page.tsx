@@ -3,6 +3,7 @@ import { icons } from "@/config/icons";
 import { Nav } from "@/components/nav";
 import { SiteFooter } from "@/components/site-footer";
 import { JsonLd } from "@/components/json-ld";
+import { ProjectCarousel } from "@/components/project-carousel";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import Link from "next/link";
@@ -11,6 +12,7 @@ import {
   ArrowLeftIcon,
   ArrowUpRightIcon,
   GithubLogoIcon,
+  CheckCircleIcon,
 } from "@phosphor-icons/react/dist/ssr";
 
 type Props = {
@@ -137,22 +139,13 @@ export default async function ProjectPage({ params }: Props) {
           </div>
         </div>
 
-        {/* Screenshot */}
-        {project.image && (
-          <div
-            className="w-full overflow-hidden border border-border/60 mb-12"
-            style={{ viewTransitionName: `project-image-${project.slug}` }}
-          >
-            <Image
-              src={project.image}
-              alt={`${project.name} screenshot`}
-              width={1200}
-              height={675}
-              className="w-full object-cover"
-              priority
-            />
-          </div>
-        )}
+        {/* Screenshot Carousel */}
+        <ProjectCarousel
+          images={project.images}
+          image={project.image}
+          title={project.name}
+          slug={project.slug}
+        />
 
         {/* Main content grid */}
         <div className="grid grid-cols-1 md:grid-cols-[1fr_260px] gap-10 mb-12">
@@ -172,6 +165,43 @@ export default async function ProjectPage({ params }: Props) {
                 <p className="text-[0.9rem] leading-[1.8] text-foreground/80">
                   {caseStudy.solution}
                 </p>
+              </div>
+            )}
+            {caseStudy?.features && caseStudy.features.length > 0 && (
+              <div className="flex flex-col gap-3">
+                <SectionLabel>Key Features</SectionLabel>
+                <div className="grid grid-cols-1 gap-2.5">
+                  {caseStudy.features.map((feature, idx) => {
+                    const parts = feature.split(":");
+                    const titlePart = parts.length > 1 ? parts[0] : null;
+                    const descPart = parts.length > 1 ? parts.slice(1).join(":") : feature;
+
+                    return (
+                      <div
+                        key={idx}
+                        className="flex items-start gap-2.5 text-[0.875rem] text-foreground/85 leading-relaxed bg-muted/15 p-3 rounded-lg border border-border/40"
+                      >
+                        <CheckCircleIcon size={16} className="text-emerald-500 shrink-0 mt-0.5" />
+                        <div>
+                          {titlePart && (
+                            <span className="font-semibold text-foreground mr-1.5">
+                              {titlePart}:
+                            </span>
+                          )}
+                          <span>{descPart}</span>
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              </div>
+            )}
+            {caseStudy?.architecture && (
+              <div className="flex flex-col gap-2">
+                <SectionLabel>Architecture & Flow</SectionLabel>
+                <div className="text-[0.875rem] leading-[1.8] text-foreground/80 bg-muted/20 p-4 rounded-lg border border-border/50 font-mono text-[0.82rem]">
+                  {caseStudy.architecture}
+                </div>
               </div>
             )}
             {caseStudy?.outcome && (

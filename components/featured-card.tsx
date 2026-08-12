@@ -37,6 +37,7 @@ export function FeaturedCard({
               width={800}
               height={450}
               className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 ease-out"
+              priority={index === 0}
             />
           </Link>
         )}

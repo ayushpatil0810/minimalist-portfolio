@@ -44,6 +44,7 @@ export function ProjectCard({
               fill
               sizes={featured ? "(max-width: 768px) 100vw, 800px" : "(max-width: 768px) 100vw, 400px"}
               className="object-cover group-hover:scale-[1.025] transition-transform duration-600 ease-out"
+              priority={index === 0}
             />
           </Link>
         ) : (

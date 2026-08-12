@@ -2,6 +2,8 @@ export type ProjectCaseStudy = {
   problem?: string;
   solution?: string;
   outcome?: string;
+  features?: string[];
+  architecture?: string;
 };
 
 export type Project = {
@@ -13,8 +15,10 @@ export type Project = {
   liveUrl?: string;
   githubUrl?: string;
   tech: string[];
-  /** Path or URL to a project screenshot */
+  /** Path or URL to a main project screenshot */
   image?: string;
+  /** Array of project screenshots for carousel display */
+  images?: string[];
   /** Optional deep-dive written by you */
   caseStudy?: ProjectCaseStudy;
   /** Year the project was built */
@@ -30,44 +34,70 @@ export const projectsData: Project[] = [
     slug: "mentis-ai",
     name: "Mentis AI",
     category: "AI / Full Stack",
-    year: "2025",
+    year: "2026",
     featured: true,
     description:
-      "An intelligent multi-provider AI chat and productivity workspace supporting OpenAI, Anthropic, and Gemini models.",
+      "An elegant, fast AI assistant supporting OpenAI, Anthropic, and Gemini models with native web search, tools, and BYOK key privacy.",
     longDescription:
-      "Mentis AI is a full-stack AI workspace built with Next.js, Vercel AI SDK, Drizzle ORM, and PostgreSQL. It allows users to bring their own API keys, seamlessly switch between OpenAI, Anthropic, and Gemini models, stream real-time responses, manage chat histories, and export conversation notes.",
-    insight: "Designed with a decoupled provider architecture allowing dynamic key injection and multi-model streaming.",
+      "Mentis AI is a full stack AI workspace built with Next.js 16, Vercel AI SDK, Better Auth, and PostgreSQL. Users can interact with OpenAI, Anthropic, and Gemini models using encrypted keys, streaming responses, server tools (Web Search, URL Reader, Calculator, Search), conversation branching, and PDF or Markdown exporting.",
+    insight:
+      "Designed with a decoupled provider architecture, server tool execution engine, and dynamic key injection with AES 256 encryption.",
+    liveUrl: "https://mentis.ayushpatil.in",
     githubUrl: "https://github.com/ayushpatil0810/mentis-ai",
     tech: [
       "Next.js",
       "TypeScript",
-      "OpenAI SDK",
-      "Gemini API",
+      "Tailwind CSS",
+      "Shadcn",
       "PostgreSQL",
       "Drizzle",
       "BetterAuth",
-      "Tailwind CSS",
+      "OpenAI SDK",
+      "Gemini API",
+      "Vercel",
+    ],
+    image: "/projects/mentis-ai/mentis-ai-1.png",
+    images: [
+      "/projects/mentis-ai/mentis-ai-1.png",
+      "/projects/mentis-ai/mentis-ai-2.png",
+      "/projects/mentis-ai/mentis-ai-3.png",
+      "/projects/mentis-ai/mentis-ai-4.png",
+      "/projects/mentis-ai/mentis-ai-5.png",
+      "/projects/mentis-ai/mentis-ai-6.png",
+      "/projects/mentis-ai/mentis-ai-7.png",
     ],
     caseStudy: {
       problem:
-        "Users are often locked into single AI provider platforms or forced to pay subscription fees across multiple services without being able to bring their own API keys or switch seamlessly between state-of-the-art models like GPT-4o, Claude 3.5 Sonnet, and Gemini 1.5 Pro.",
+        "Users are often locked into single AI provider platforms or forced to pay subscription fees across multiple services without being able to bring their own API keys, run custom tools (like web search or webpage reading), search past message history, or branch conversation turns cleanly.",
       solution:
-        "Built Mentis AI as a unified multi-provider AI assistant environment. Integrated Vercel AI SDK with custom provider adapters, dynamic API key injection, PostgreSQL storage via Drizzle ORM, BetterAuth authentication, and real-time streaming markdown rendering.",
+        "Built Mentis AI as a unified multi-provider AI assistant environment utilizing Next.js 16 App Router, React 19, and Drizzle ORM. Integrated Vercel AI SDK with custom provider adapters, client/server AES-256 key encryption, PostgreSQL full-text search, Better Auth, and a domain-driven tool suite (Tavily Web Search, URL Fetcher, Safe Math Calculator, Date/Time Manager, and Full-Text Message Search).",
       outcome:
-        "Created a responsive, privacy-respecting AI workspace where users control their keys, chat trajectories, and model preferences with zero platform vendor lock-in.",
+        "Delivered a high-performance, privacy-respecting AI workbench where users control their API keys, chat trajectories, and model preferences with zero platform lock-in. Features rich conversation branching, custom system prompts per chat, request latency and token cost tracking, and export options to PDF, Markdown, and JSON.",
+      features: [
+        "Multi-Provider BYOK: Connect OpenAI, Anthropic, or Google Gemini API keys with AES-256 encryption.",
+        "Integrated AI Tools Suite: Live web search (Tavily API), URL content fetcher with SSRF protection, safe math calculator, date/time manager, and conversation/message search.",
+        "Full-Text Message Search: Native PostgreSQL full-text search (to_tsvector / websearch_to_tsquery) across all past user messages.",
+        "Real-Time Response Streaming: Ultra-low latency streaming powered by Vercel AI SDK and custom UI message streams.",
+        "Conversation Branching & Versioning: Retry assistant responses to generate alternative versions without losing prior history.",
+        "Custom System Instructions: Define per-chat custom system prompts to tailor AI behavior and outputs.",
+        "Exporting & Sharing: Export chats to PDF, Markdown, or JSON cleanly, and share via public links.",
+        "Token & Cost Tracking: Dynamic latency measurements, input/output token analysis, and model cost calculations per turn.",
+        "Modern Dark-First UI: WCAG 2.2 AA compliant UI built with Tailwind CSS v4, Geist typography, shadcn/ui, and micro-animations.",
+      ],
     },
   },
   {
     slug: "endpnt",
     name: "endpnt",
     category: "Full Stack Product",
-    year: "2024",
+    year: "2026",
     featured: true,
     description:
       "A platform enabling developers to create customizable portfolio pages with a single shareable link",
     longDescription:
       "endpnt is a developer-first portfolio and link-in-bio platform that centralizes a developer's digital identity into a single customizable profile. It integrates with GitHub, LeetCode, Dev.to, Medium, and Hashnode to automatically surface technical contributions and content.",
-    insight: "Designed around reusable profile schemas instead of hardcoded sections.",
+    insight:
+      "Designed around reusable profile schemas instead of hardcoded sections.",
     liveUrl: "https://endpnt.vercel.app",
     githubUrl: "https://github.com/ayushpatil0810/endpnt",
     tech: [
@@ -94,27 +124,36 @@ export const projectsData: Project[] = [
     slug: "realfiesta",
     name: "RealFiesta",
     category: "Full Stack Platform",
-    year: "2024",
+    year: "2026",
     featured: false,
     description:
       "A web platform for discovering, listing, and managing property listings and real estate events.",
     longDescription:
       "RealFiesta is a full-stack platform designed to simplify real estate management, property browsing, and interactive event coordination with structured filtering, user authentication, and responsive management dashboard.",
-    insight: "Built with clean data model schemas to handle real-time search filters and listing workflows.",
+    insight:
+      "Built with clean data model schemas to handle real-time search filters and listing workflows.",
     githubUrl: "https://github.com/ayushpatil0810/realfiesta",
-    tech: ["React", "TypeScript", "Node.js", "Express.js", "PostgreSQL", "Tailwind CSS"],
+    tech: [
+      "React",
+      "TypeScript",
+      "Node.js",
+      "Express.js",
+      "PostgreSQL",
+      "Tailwind CSS",
+    ],
   },
   {
     slug: "url-shortener",
     name: "URL Shortener Service",
     category: "Backend",
-    year: "2024",
+    year: "2026",
     featured: false,
     description:
       "A secure, scalable URL shortener with custom links, analytics, and JWT authentication using Node.js and PostgreSQL.",
     longDescription:
       "A production-ready URL shortening backend service that enables users to create, manage, and track shortened URLs through a secure REST API. The system supports custom short codes, click analytics, URL management, and high-performance redirection.",
-    insight: "Optimized redirects for constant-time lookup and reduced database load.",
+    insight:
+      "Optimized redirects for constant-time lookup and reduced database load.",
     githubUrl: "https://github.com/ayushpatil0810/url-shortner-backend",
     tech: ["Node.js", "TypeScript", "Drizzle", "Zod", "Express.js"],
     caseStudy: {
@@ -128,13 +167,14 @@ export const projectsData: Project[] = [
     slug: "github-profile-roaster",
     name: "GitHub Profile Roaster",
     category: "AI / Fun",
-    year: "2024",
+    year: "2025",
     featured: false,
     description:
       "A fun web application that analyzes your GitHub profile and repositories to generate roasts using Gemini AI.",
     longDescription:
       "A lightweight web app that takes any GitHub username, pulls repository and profile metadata via the GitHub API, and feeds it into a Gemini LLM chain to produce a witty, personalized roast of the developer.",
-    insight: "Leveraged LLM chaining to dynamically score and analyze repository metadata.",
+    insight:
+      "Leveraged LLM chaining to dynamically score and analyze repository metadata.",
     liveUrl: "https://githubprofileroaster.onrender.com",
     githubUrl: "https://github.com/ayushpatil0810/github-profile-roaster",
     tech: ["HTML", "CSS", "Python", "Flask", "GitHub", "Gemini API"],
@@ -143,15 +183,16 @@ export const projectsData: Project[] = [
     slug: "minimalist-portfolio",
     name: "Minimalist Portfolio",
     category: "Frontend",
-    year: "2025",
+    year: "2026",
     featured: false,
     description:
       "A minimalist portfolio built with Next.js and TypeScript, showcasing projects and skills with a clean, editorial design.",
     longDescription:
       "This very site, built with intentional restraint. The design philosophy centers on typography, whitespace, and meaningful motion over decoration.",
-    insight: "Focused on an intentional, asymmetric design to reflect a backend engineer's aesthetic.",
+    insight:
+      "Focused on an intentional, asymmetric design to reflect a backend engineer's aesthetic.",
     liveUrl: "https://ayushpatil.in",
     githubUrl: "https://github.com/ayushpatil0810/minimalist-portfolio",
-    tech: ["Next.js", "TypeScript", "Tailwind CSS", "Framer Motion", "Vercel"],
+    tech: ["Next.js", "TypeScript", "Tailwind CSS", "React", "Vercel"],
   },
 ];
