@@ -143,7 +143,7 @@ export function ContactForm() {
           <motion.button
             type="submit"
             disabled={loading}
-            whileTap={!loading ? { scale: 0.97 } : undefined}
+            whileTap={{ scale: loading ? 1 : 0.97 }}
             transition={{ type: "spring", bounce: 0, duration: 0.15 }}
             className="inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-5 py-2.5 bg-foreground text-background hover:bg-foreground/85 transition-colors duration-200 disabled:opacity-50 font-medium"
           >
