@@ -1,6 +1,6 @@
 "use client";
 
-import { useLayoutEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import type React from "react";
 import { useInView } from "framer-motion";
 import { annotate } from "rough-notation";
@@ -30,15 +30,16 @@ interface HighlighterProps {
 export function Highlighter({
   children,
   action = "highlight",
-  color = "#fbbf24", // Default to warm yellow/amber
+  color = "#f59e0b",
   strokeWidth = 1.5,
   animationDuration = 800,
   iterations = 1,
   padding = 2,
   multiline = true,
-  isView = true, // Wait for scroll inView by default
+  isView = true,
 }: HighlighterProps) {
   const elementRef = useRef<HTMLSpanElement>(null);
+  const [resolvedColor, setResolvedColor] = useState(color);
 
   // Trigger when element scrolls into view
   const isInView = useInView(elementRef, {
@@ -48,7 +49,22 @@ export function Highlighter({
 
   const shouldShow = !isView || isInView;
 
-  useLayoutEffect(() => {
+  // Resolve CSS variable to actual computed color string if needed
+  useEffect(() => {
+    if (elementRef.current && color.startsWith("var(")) {
+      const varName = color.slice(4, -1).trim();
+      const computed = getComputedStyle(elementRef.current).getPropertyValue(varName).trim();
+      if (computed) {
+        setResolvedColor(computed);
+      } else {
+        setResolvedColor("#f59e0b");
+      }
+    } else {
+      setResolvedColor(color);
+    }
+  }, [color]);
+
+  useEffect(() => {
     const element = elementRef.current;
     let annotation: RoughAnnotation | null = null;
     let resizeObserver: ResizeObserver | null = null;
@@ -56,7 +72,7 @@ export function Highlighter({
     if (shouldShow && element) {
       const annotationConfig = {
         type: action,
-        color,
+        color: resolvedColor,
         strokeWidth,
         animationDuration,
         iterations,
@@ -87,7 +103,7 @@ export function Highlighter({
   }, [
     shouldShow,
     action,
-    color,
+    resolvedColor,
     strokeWidth,
     animationDuration,
     iterations,

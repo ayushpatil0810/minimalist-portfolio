@@ -7,6 +7,7 @@ import toast from "react-hot-toast";
 
 type Web3FormsResponse = {
   success?: boolean;
+  message?: string;
 };
 
 export function ContactForm() {
@@ -17,13 +18,18 @@ export function ContactForm() {
     const form = e.currentTarget;
 
     if (loading) return;
+
+    const accessKey = process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY;
+
+    if (!accessKey) {
+      toast.error("Contact service key is missing. Please contact via email.");
+      return;
+    }
+
     setLoading(true);
 
     const formData = new FormData(e.currentTarget);
-    formData.append(
-      "access_key",
-      process.env.NEXT_PUBLIC_WEB3FORMS_ACCESS_KEY ?? "",
-    );
+    formData.append("access_key", accessKey);
     formData.append("subject", "New Contact from Portfolio");
     formData.append("from_name", "Portfolio Contact");
 
@@ -42,7 +48,7 @@ export function ContactForm() {
         toast.success("Message sent successfully.");
         form.reset();
       } else {
-        toast.error("Something went wrong. Please try again.");
+        toast.error(data.message || "Something went wrong. Please try again.");
       }
     } catch {
       toast.error("Network error. Please try again.");
@@ -74,9 +80,12 @@ export function ContactForm() {
             Whether you have a question, an opportunity, or just want to say hi.
             My inbox is open.
           </p>
-          <p className="text-[0.82rem] text-muted-foreground font-mono">
+          <a
+            href="mailto:ayushppatil2006@gmail.com"
+            className="text-[0.82rem] text-muted-foreground hover:text-foreground transition-colors font-mono underline underline-offset-4 decoration-border"
+          >
             ayushppatil2006@gmail.com
-          </p>
+          </a>
         </div>
 
         {/* Right: form */}
@@ -85,13 +94,14 @@ export function ContactForm() {
           <input type="checkbox" name="botcheck" style={{ display: "none" }} />
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="contact-name" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+            <label htmlFor="contact-name" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/70">
               Name
             </label>
             <input
               type="text"
               id="contact-name"
               name="name"
+              autoComplete="name"
               placeholder="Your name"
               required
               className="w-full bg-transparent border-b border-border/60 py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 focus:border-foreground transition-colors duration-200"
@@ -99,13 +109,14 @@ export function ContactForm() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="contact-email" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+            <label htmlFor="contact-email" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/70">
               Email
             </label>
             <input
               type="email"
               id="contact-email"
               name="email"
+              autoComplete="email"
               placeholder="you@example.com"
               required
               className="w-full bg-transparent border-b border-border/60 py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 focus:border-foreground transition-colors duration-200"
@@ -113,7 +124,7 @@ export function ContactForm() {
           </div>
 
           <div className="flex flex-col gap-1">
-            <label htmlFor="contact-message" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+            <label htmlFor="contact-message" className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/70">
               Message
             </label>
             <textarea

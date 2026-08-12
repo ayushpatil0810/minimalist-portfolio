@@ -27,17 +27,16 @@ export function ProjectCard({
       }}
       className={featured ? "md:col-span-2" : ""}
     >
-      <Link
-        href={`/projects/${project.slug}`}
-        className="group flex flex-col border border-border/60 hover:border-border/90 transition-all duration-300 overflow-hidden h-full"
-      >
+      <div className="group flex flex-col border border-border/60 hover:border-border/90 transition-all duration-300 overflow-hidden h-full">
         {/* Screenshot */}
         {project.image ? (
-          <div
-            className={`overflow-hidden bg-muted/20 border-b border-border/50 relative ${
+          <Link
+            href={`/projects/${project.slug}`}
+            className={`overflow-hidden bg-muted/20 border-b border-border/50 relative block ${
               featured ? "aspect-[21/9]" : "aspect-[16/9]"
             }`}
             style={{ viewTransitionName: `project-image-${project.slug}` }}
+            tabIndex={-1}
           >
             <Image
               src={project.image}
@@ -46,13 +45,15 @@ export function ProjectCard({
               sizes={featured ? "(max-width: 768px) 100vw, 800px" : "(max-width: 768px) 100vw, 400px"}
               className="object-cover group-hover:scale-[1.025] transition-transform duration-600 ease-out"
             />
-          </div>
+          </Link>
         ) : (
-          /* No image, decorative placeholder with project initials */
-          <div
-            className={`overflow-hidden bg-muted/10 border-b border-border/40 flex items-center justify-center ${
+          /* Decorative placeholder with project initials */
+          <Link
+            href={`/projects/${project.slug}`}
+            className={`overflow-hidden bg-muted/10 border-b border-border/40 flex items-center justify-center block ${
               featured ? "aspect-[21/9]" : "aspect-[16/9]"
             }`}
+            tabIndex={-1}
           >
             <span className="text-4xl font-semibold tracking-tighter text-border select-none">
               {project.name
@@ -62,14 +63,14 @@ export function ProjectCard({
                 .toUpperCase()
                 .slice(0, 3)}
             </span>
-          </div>
+          </Link>
         )}
 
         {/* Content */}
         <div className="p-5 flex flex-col gap-3 flex-1">
           <div className="flex items-start justify-between gap-3">
             <div className="flex flex-col gap-0.5">
-              <span className="text-[0.62rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/50">
+              <span className="text-[0.62rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/80">
                 {project.category} · {project.year}
               </span>
               <h3
@@ -77,54 +78,39 @@ export function ProjectCard({
                   featured ? "text-[1.2rem]" : "text-[1rem]"
                 }`}
               >
-                {project.name}
+                <Link
+                  href={`/projects/${project.slug}`}
+                  className="hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
+                >
+                  {project.name}
+                </Link>
               </h3>
             </div>
-            <div className="flex items-center gap-2 shrink-0 opacity-0 group-hover:opacity-100 transition-opacity duration-200 mt-1">
+            <div className="flex items-center gap-2 shrink-0 mt-1">
               {project.githubUrl && (
-                <span
-                  role="button"
-                  tabIndex={0}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(project.githubUrl, "_blank", "noopener,noreferrer");
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      window.open(project.githubUrl, "_blank", "noopener,noreferrer");
-                    }
-                  }}
-                  className="text-muted-foreground hover:text-foreground transition-colors p-1 cursor-pointer"
-                  aria-label="View source on GitHub"
+                <a
+                  href={project.githubUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  title="View source on GitHub"
+                  aria-label={`View source code for ${project.name} on GitHub`}
                 >
                   <GithubLogoIcon size={15} />
-                </span>
+                </a>
               )}
               {project.liveUrl && (
-                <span
-                  role="button"
-                  tabIndex={0}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    window.open(project.liveUrl, "_blank", "noopener,noreferrer");
-                  }}
-                  onKeyDown={(e) => {
-                    if (e.key === "Enter" || e.key === " ") {
-                      e.preventDefault();
-                      window.open(project.liveUrl, "_blank", "noopener,noreferrer");
-                    }
-                  }}
-                  className="text-muted-foreground hover:text-foreground transition-colors p-1 cursor-pointer"
-                  aria-label="View live site"
+                <a
+                  href={project.liveUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="text-muted-foreground hover:text-foreground transition-colors p-1 rounded-sm focus:outline-none focus:ring-2 focus:ring-ring"
+                  title="View live site"
+                  aria-label={`View live site for ${project.name}`}
                 >
                   <ArrowUpRightIcon size={15} />
-                </span>
+                </a>
               )}
-              <ArrowUpRightIcon
-                size={15}
-                className="text-muted-foreground/50"
-              />
             </div>
           </div>
 
@@ -134,7 +120,7 @@ export function ProjectCard({
 
           {/* Insight quote */}
           {project.insight && (
-            <div className="pl-3 border-l-2 border-border/60 text-[0.78rem] text-foreground/60 italic mt-1">
+            <div className="pl-3 border-l-2 border-border/60 text-[0.78rem] text-foreground/70 italic mt-1">
               &quot;{project.insight}&quot;
             </div>
           )}
@@ -149,10 +135,11 @@ export function ProjectCard({
                 {icons[tech] && (
                   <Image
                     src={icons[tech]!}
-                    alt={tech}
+                    alt=""
                     width={11}
                     height={11}
                     className="w-2.5 h-2.5"
+                    unoptimized
                   />
                 )}
                 {tech}
@@ -160,7 +147,7 @@ export function ProjectCard({
             ))}
           </div>
         </div>
-      </Link>
+      </div>
     </motion.div>
   );
 }

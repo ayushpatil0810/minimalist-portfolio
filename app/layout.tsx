@@ -11,14 +11,14 @@ const syne = Syne({
   variable: "--font-syne",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["500", "600", "700"],
 });
 
 const dmSans = DM_Sans({
   variable: "--font-dm-sans",
   subsets: ["latin"],
   display: "swap",
-  weight: ["300", "400", "500", "600"],
+  weight: ["400", "500", "600"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -62,12 +62,21 @@ export const metadata: Metadata = {
     description:
       "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
     siteName: "Ayush Patil Portfolio",
+    images: [
+      {
+        url: "/opengraph-image",
+        width: 1200,
+        height: 630,
+        alt: "Ayush Patil, Full Stack Engineer",
+      },
+    ],
   },
   twitter: {
     card: "summary_large_image",
     title: "Ayush Patil, Full Stack Engineer",
     description:
       "Portfolio of Ayush Patil, a Full Stack Engineer exploring AI & Machine Learning.",
+    images: ["/opengraph-image"],
     creator: "@ayushpatil0810",
   },
   icons: {
@@ -98,13 +107,7 @@ export default function RootLayout({
           <Toaster
             position="bottom-right"
             toastOptions={{
-              style: {
-                background: "var(--card)",
-                color: "var(--foreground)",
-                border: "1px solid var(--border)",
-                borderRadius: "0.25rem",
-                fontSize: "0.85rem",
-              },
+              className: "!bg-card !text-card-foreground !border !border-border !shadow-md !rounded-md !text-xs font-mono",
             }}
           />
         </ThemeProvider>

@@ -27,6 +27,37 @@ export type Project = {
 
 export const projectsData: Project[] = [
   {
+    slug: "mentis-ai",
+    name: "Mentis AI",
+    category: "AI / Full Stack",
+    year: "2025",
+    featured: true,
+    description:
+      "An intelligent multi-provider AI chat and productivity workspace supporting OpenAI, Anthropic, and Gemini models.",
+    longDescription:
+      "Mentis AI is a full-stack AI workspace built with Next.js, Vercel AI SDK, Drizzle ORM, and PostgreSQL. It allows users to bring their own API keys, seamlessly switch between OpenAI, Anthropic, and Gemini models, stream real-time responses, manage chat histories, and export conversation notes.",
+    insight: "Designed with a decoupled provider architecture allowing dynamic key injection and multi-model streaming.",
+    githubUrl: "https://github.com/ayushpatil0810/mentis-ai",
+    tech: [
+      "Next.js",
+      "TypeScript",
+      "OpenAI SDK",
+      "Gemini API",
+      "PostgreSQL",
+      "Drizzle",
+      "BetterAuth",
+      "Tailwind CSS",
+    ],
+    caseStudy: {
+      problem:
+        "Users are often locked into single AI provider platforms or forced to pay subscription fees across multiple services without being able to bring their own API keys or switch seamlessly between state-of-the-art models like GPT-4o, Claude 3.5 Sonnet, and Gemini 1.5 Pro.",
+      solution:
+        "Built Mentis AI as a unified multi-provider AI assistant environment. Integrated Vercel AI SDK with custom provider adapters, dynamic API key injection, PostgreSQL storage via Drizzle ORM, BetterAuth authentication, and real-time streaming markdown rendering.",
+      outcome:
+        "Created a responsive, privacy-respecting AI workspace where users control their keys, chat trajectories, and model preferences with zero platform vendor lock-in.",
+    },
+  },
+  {
     slug: "endpnt",
     name: "endpnt",
     category: "Full Stack Product",
@@ -60,11 +91,25 @@ export const projectsData: Project[] = [
     },
   },
   {
+    slug: "realfiesta",
+    name: "RealFiesta",
+    category: "Full Stack Platform",
+    year: "2024",
+    featured: false,
+    description:
+      "A web platform for discovering, listing, and managing property listings and real estate events.",
+    longDescription:
+      "RealFiesta is a full-stack platform designed to simplify real estate management, property browsing, and interactive event coordination with structured filtering, user authentication, and responsive management dashboard.",
+    insight: "Built with clean data model schemas to handle real-time search filters and listing workflows.",
+    githubUrl: "https://github.com/ayushpatil0810/realfiesta",
+    tech: ["React", "TypeScript", "Node.js", "Express.js", "PostgreSQL", "Tailwind CSS"],
+  },
+  {
     slug: "url-shortener",
     name: "URL Shortener Service",
     category: "Backend",
     year: "2024",
-    featured: true,
+    featured: false,
     description:
       "A secure, scalable URL shortener with custom links, analytics, and JWT authentication using Node.js and PostgreSQL.",
     longDescription:

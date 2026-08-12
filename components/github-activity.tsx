@@ -83,33 +83,27 @@ export function GithubActivity() {
     mostActive: string;
   } | null>(null);
 
-  // Guard against calling setStats during another render cycle
-  const statsSetRef = useRef(false);
+  const pendingDataRef = useRef<ContribDay[] | null>(null);
 
   useEffect(() => {
-    // eslint-disable-next-line react-hooks/set-state-in-effect
     setMounted(true);
   }, []);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
   const isDark = currentTheme === "dark";
 
-  // transformData is called synchronously during render by the library.
-  // We use a ref to defer the setState to after paint, preventing the
-  // "setState during render" warning and infinite loop.
-  const transformData = useCallback(
-    (data: ContribDay[]) => {
-      if (!statsSetRef.current) {
-        statsSetRef.current = true;
-        // Defer the setState to avoid updating state during a render
-        setTimeout(() => {
-          setStats(computeStats(data));
-        }, 0);
-      }
-      return data;
-    },
-    [], // stable reference
-  );
+  // Safely schedule stats update after render pass completes
+  useEffect(() => {
+    if (pendingDataRef.current) {
+      setStats(computeStats(pendingDataRef.current));
+      pendingDataRef.current = null;
+    }
+  });
+
+  const transformData = useCallback((data: ContribDay[]) => {
+    pendingDataRef.current = data;
+    return data;
+  }, []);
 
   return (
     <motion.section
