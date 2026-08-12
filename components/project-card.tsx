@@ -18,16 +18,20 @@ export function ProjectCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 28 }}
+      initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{
+        type: "spring",
+        bounce: 0,
         duration: 0.5,
-        delay: index * 0.08,
-        ease: [0.25, 0.46, 0.45, 0.94],
+        delay: index * 0.07,
       }}
-      className={featured ? "md:col-span-2" : ""}
+      whileHover={{ scale: 1.003 }}
+      whileTap={{ scale: 0.99 }}
+      className={`${featured ? "md:col-span-2" : ""} cursor-pointer`}
+      style={{ willChange: "transform" }}
     >
-      <div className="group flex flex-col border border-border/60 hover:border-border/90 transition-all duration-300 overflow-hidden h-full">
+      <div className="group flex flex-col border border-border/60 hover:border-border/90 transition-[border-color,box-shadow] duration-300 overflow-hidden h-full hover:shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_24px_rgba(0,0,0,0.25)]">
         {/* Screenshot */}
         {project.image ? (
           <Link
@@ -38,14 +42,20 @@ export function ProjectCard({
             style={{ viewTransitionName: `project-image-${project.slug}` }}
             tabIndex={-1}
           >
-            <Image
-              src={project.image}
-              alt={`${project.name} screenshot`}
-              fill
-              sizes={featured ? "(max-width: 768px) 100vw, 800px" : "(max-width: 768px) 100vw, 400px"}
-              className="object-cover group-hover:scale-[1.025] transition-transform duration-600 ease-out"
-              priority={index === 0}
-            />
+            <motion.div
+              className="absolute inset-0"
+              whileHover={{ scale: 1.028 }}
+              transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+            >
+              <Image
+                src={project.image}
+                alt={`${project.name} screenshot`}
+                fill
+                sizes={featured ? "(max-width: 768px) 100vw, 800px" : "(max-width: 768px) 100vw, 400px"}
+                className="object-cover"
+                priority={index === 0}
+              />
+            </motion.div>
           </Link>
         ) : (
           /* Decorative placeholder with project initials */

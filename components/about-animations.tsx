@@ -13,10 +13,10 @@ export function FadeUp({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay, ease: [0.25, 0.46, 0.45, 0.94] }}
+      transition={{ type: "spring", bounce: 0, duration: 0.5, delay }}
       className={className}
     >
       {children}
@@ -33,10 +33,10 @@ export function FadeUpSection({
 }) {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5 }}
+      transition={{ type: "spring", bounce: 0, duration: 0.5 }}
       className={className}
     >
       {children}
@@ -57,12 +57,14 @@ export function SkillAboutFadeIn({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, x: -8 }}
+      initial={{ opacity: 0, x: -6 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{
-        duration: 0.35,
-        delay: 0.05 * gi + si * 0.04,
+        type: "spring",
+        bounce: 0,
+        duration: 0.4,
+        delay: 0.04 * gi + si * 0.03,
       }}
       className={className}
     >
@@ -82,10 +84,10 @@ export function HoleAnimation({
 }) {
   return (
     <motion.span
-      initial={{ opacity: 0, scale: 0.95 }}
+      initial={{ opacity: 0, scale: 0.96 }}
       whileInView={{ opacity: 1, scale: 1 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.3, delay: index * 0.07 }}
+      transition={{ type: "spring", bounce: 0, duration: 0.35, delay: index * 0.06 }}
       className={className}
     >
       {children}

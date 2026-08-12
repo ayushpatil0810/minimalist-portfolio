@@ -26,23 +26,25 @@ export function ThemeToggle() {
   }
 
   return (
-    <button
+    <motion.button
       onClick={() => setTheme(theme === "dark" ? "light" : "dark")}
-      className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-foreground/5 dark:hover:bg-foreground/10 transition-all duration-300 flex items-center justify-center relative overflow-hidden"
+      className="p-2 rounded-full text-muted-foreground hover:text-foreground hover:bg-foreground/5 dark:hover:bg-foreground/10 transition-colors duration-200 flex items-center justify-center relative overflow-hidden"
       aria-label="Toggle theme"
+      whileTap={{ scale: 0.92 }}
+      transition={{ type: "spring", bounce: 0, duration: 0.15 }}
     >
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={theme}
-          initial={{ y: -12, opacity: 0, rotate: -45 }}
-          animate={{ y: 0, opacity: 1, rotate: 0 }}
-          exit={{ y: 12, opacity: 0, rotate: 45 }}
-          transition={{ duration: 0.15, ease: "easeInOut" }}
+          initial={{ y: -10, opacity: 0 }}
+          animate={{ y: 0, opacity: 1 }}
+          exit={{ y: 10, opacity: 0 }}
+          transition={{ type: "spring", bounce: 0, duration: 0.2 }}
           className="flex items-center justify-center"
         >
           {theme === "dark" ? <SunIcon size={18} /> : <MoonIcon size={18} />}
         </motion.div>
       </AnimatePresence>
-    </button>
+    </motion.button>
   );
 }

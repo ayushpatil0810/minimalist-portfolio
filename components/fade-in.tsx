@@ -13,10 +13,10 @@ export function FadeIn({
 }) {
   return (
     <motion.section
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-100px" }}
-      transition={{ duration: 0.5, delay }}
+      transition={{ type: "spring", bounce: 0, duration: 0.5, delay }}
       className={className}
     >
       {children}

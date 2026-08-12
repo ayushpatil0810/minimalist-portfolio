@@ -11,7 +11,7 @@ import { Highlighter } from "@/components/highlighter";
 
 const headline = ["Mostly backend.", "Occasionally frontend."];
 
-/** Split text into word-level spans with stagger */
+/** Split text into word-level spans with spring stagger */
 function SplitText({
   text,
   delay = 0,
@@ -27,12 +27,13 @@ function SplitText({
       {words.map((word, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0, y: 16, filter: "blur(4px)" }}
+          initial={{ opacity: 0, y: 10, filter: "blur(2px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
           transition={{
-            duration: 0.5,
-            delay: delay + i * 0.07,
-            ease: [0.25, 0.46, 0.45, 0.94],
+            type: "spring",
+            bounce: 0,
+            duration: 0.55,
+            delay: delay + i * 0.06,
           }}
           className="inline-block mr-[0.3em] last:mr-0"
         >
@@ -43,13 +44,14 @@ function SplitText({
   );
 }
 
-/** Avatar with mouse-follow 3D tilt */
+/** Avatar with mouse-follow 3D tilt — weighted physical spring */
 function TiltAvatar() {
   const ref = useRef<HTMLDivElement>(null);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const springX = useSpring(x, { stiffness: 200, damping: 22 });
-  const springY = useSpring(y, { stiffness: 200, damping: 22 });
+  // Weighted, critically-damped spring — feels like a physical object, no overshoot
+  const springX = useSpring(x, { stiffness: 160, damping: 20 });
+  const springY = useSpring(y, { stiffness: 160, damping: 20 });
   const rotateX = useTransform(springY, [-0.5, 0.5], [8, -8]);
   const rotateY = useTransform(springX, [-0.5, 0.5], [-8, 8]);
 
@@ -92,13 +94,13 @@ export function Hero() {
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ duration: 0.4 }}
+        transition={{ type: "spring", bounce: 0, duration: 0.5 }}
         className="flex items-start gap-6 mb-10"
       >
         <TiltAvatar />
 
         <div className="flex flex-col gap-1 pt-1">
-          <span className="text-2xl md:text-3xl font-semibold tracking-tight leading-none">
+          <span className="text-2xl md:text-3xl font-semibold leading-none" style={{ letterSpacing: "-0.025em" }}>
             Ayush Patil
           </span>
           <span className="text-sm text-muted-foreground font-mono tracking-tight">
@@ -106,9 +108,9 @@ export function Hero() {
           </span>
           {openToWork.active && (
             <motion.div
-              initial={{ opacity: 0, x: -8 }}
+              initial={{ opacity: 0, x: -6 }}
               animate={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.6, duration: 0.4 }}
+              transition={{ type: "spring", bounce: 0, duration: 0.4, delay: 0.55 }}
               className="flex items-center mt-1"
             >
               <span className="text-[0.7rem] text-muted-foreground tracking-tight">
@@ -119,17 +121,19 @@ export function Hero() {
         </div>
       </motion.div>
 
-      <h1 className="text-[2rem] md:text-[2.6rem] leading-[1.15] tracking-tight font-semibold mb-4">
+      {/* Headline */}
+      <h1 className="text-[2rem] md:text-[2.6rem] leading-[1.1] font-semibold mb-4" style={{ letterSpacing: "-0.025em" }}>
         {headline.map((line, i) => (
           <span key={i} className="block">
-            <SplitText text={line} delay={0.15 + i * 0.15} />
+            <SplitText text={line} delay={0.12 + i * 0.12} />
           </span>
         ))}
         <motion.span
           initial={{ opacity: 0, y: 8, filter: "blur(2px)" }}
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          transition={{ duration: 0.5, delay: 0.45, ease: "easeOut" }}
+          transition={{ type: "spring", bounce: 0, duration: 0.55, delay: 0.38 }}
           className="block mt-2 text-muted-foreground font-normal text-[1.6rem] md:text-[2.2rem] leading-snug"
+          style={{ letterSpacing: "-0.018em" }}
         >
           Obsessed with building scalable systems &{" "}
           <Highlighter action="underline" color="var(--accent-color)" strokeWidth={2.5} animationDuration={1000}>
@@ -139,11 +143,11 @@ export function Hero() {
         </motion.span>
       </h1>
 
-      {/* Social links, text style, editorial */}
+      {/* Social links */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.7, duration: 0.4 }}
+        transition={{ type: "spring", bounce: 0, duration: 0.5, delay: 0.6 }}
         className="flex items-center gap-4 flex-wrap mt-8 mb-8"
       >
         {socials.slice(0, 4).map(({ href, label }) => (
@@ -163,26 +167,38 @@ export function Hero() {
         ))}
       </motion.div>
 
-      {/* CTA row */}
+      {/* CTA row — pointer-down feedback on both buttons */}
       <motion.div
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
-        transition={{ delay: 0.85, duration: 0.4 }}
+        transition={{ type: "spring", bounce: 0, duration: 0.5, delay: 0.72 }}
         className="flex items-center gap-3"
       >
-        <Link
-          href="/resume"
-          className="inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-medium tracking-tight hover:bg-foreground/85 transition-colors duration-200"
+        <motion.div
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", bounce: 0, duration: 0.15 }}
         >
-          View Resume
-          <ArrowUpRightIcon size={13} />
-        </Link>
-        <Link
-          href="/projects"
-          className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium tracking-tight hover:bg-muted/60 transition-colors duration-200"
+          <Link
+            href="/resume"
+            className="inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors duration-200"
+            style={{ letterSpacing: "-0.01em" }}
+          >
+            View Resume
+            <ArrowUpRightIcon size={13} />
+          </Link>
+        </motion.div>
+        <motion.div
+          whileTap={{ scale: 0.97 }}
+          transition={{ type: "spring", bounce: 0, duration: 0.15 }}
         >
-          See Projects
-        </Link>
+          <Link
+            href="/projects"
+            className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium hover:bg-muted/60 transition-colors duration-200"
+            style={{ letterSpacing: "-0.01em" }}
+          >
+            See Projects
+          </Link>
+        </motion.div>
       </motion.div>
     </section>
   );

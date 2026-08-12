@@ -37,9 +37,11 @@ export function Nav() {
     >
       <nav
         className={cn(
-          "pointer-events-auto w-[calc(100%-2rem)] max-w-4xl mx-auto flex items-center justify-between transition-all duration-300 ease-in-out rounded-full border px-4 sm:px-6 py-2.5",
+          "pointer-events-auto w-[calc(100%-2rem)] max-w-4xl mx-auto flex items-center justify-between rounded-full border px-4 sm:px-6 py-2.5",
+          // Transition only border/shadow/bg — not transform — for smooth scroll appearance
+          "transition-[background-color,border-color,box-shadow] duration-300 ease-out",
           isScrolled
-            ? "bg-background/92 dark:bg-background/85 border-border/80 backdrop-blur-lg shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]"
+            ? "bg-background/88 dark:bg-background/82 border-border/70 backdrop-blur-[24px] [backdrop-filter:blur(24px)_saturate(180%)] shadow-[0_8px_32px_rgba(0,0,0,0.06)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.35)]"
             : "bg-transparent border-transparent py-4"
         )}
       >
@@ -52,7 +54,7 @@ export function Nav() {
             initial="initial"
             animate="animate"
             variants={{
-              animate: { transition: { staggerChildren: 0.03 } }
+              animate: { transition: { staggerChildren: 0.025 } }
             }}
             className="flex"
           >
@@ -60,10 +62,10 @@ export function Nav() {
               <motion.span
                 key={i}
                 variants={{
-                  initial: { opacity: 0, y: 4 },
+                  initial: { opacity: 0, y: 5 },
                   animate: { opacity: 1, y: 0 }
                 }}
-                transition={{ duration: 0.35, ease: "easeOut" }}
+                transition={{ type: "spring", bounce: 0, duration: 0.4 }}
                 className="inline-block"
               >
                 {char === " " ? "\u00A0" : char}
@@ -73,7 +75,7 @@ export function Nav() {
         </Link>
 
         {/* Center links */}
-        <div 
+        <div
           className="flex items-center gap-1"
           onMouseLeave={() => setHoveredIndex(null)}
         >
@@ -86,7 +88,8 @@ export function Nav() {
                 href={href}
                 onMouseEnter={() => setHoveredIndex(index)}
                 className={cn(
-                  "relative px-3.5 py-1 text-xs rounded-full transition-colors duration-200 lowercase tracking-wide",
+                  "relative px-3.5 py-1 text-xs rounded-full lowercase tracking-wide",
+                  "transition-colors duration-200",
                   isActive
                     ? "text-foreground font-medium"
                     : "text-muted-foreground hover:text-foreground",
@@ -96,14 +99,14 @@ export function Nav() {
                   <motion.span
                     layoutId="nav-hover-pill"
                     className="absolute inset-0 rounded-full bg-foreground/5 dark:bg-foreground/10"
-                    transition={{ type: "spring", bounce: 0.15, duration: 0.3 }}
+                    transition={{ type: "spring", bounce: 0.1, duration: 0.3 }}
                   />
                 )}
                 {isActive && (
                   <motion.span
                     layoutId="nav-pill"
                     className="absolute inset-0 rounded-full bg-foreground/8 dark:bg-foreground/15"
-                    transition={{ type: "spring", bounce: 0.2, duration: 0.4 }}
+                    transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
                   />
                 )}
                 <span className="relative z-10">{label}</span>

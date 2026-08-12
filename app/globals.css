@@ -138,6 +138,24 @@
   /* Apply Syne to all headings */
   h1, h2, h3, h4, h5, h6 {
     font-family: var(--font-syne), ui-sans-serif, system-ui, sans-serif;
+    font-optical-sizing: auto;
+  }
+  /* Apple size-specific tracking — never one value for all sizes */
+  h1 {
+    letter-spacing: -0.025em; /* Large display: negative tracking, letters read too far apart at scale */
+    line-height: 1.1;
+  }
+  h2 {
+    letter-spacing: -0.018em;
+    line-height: 1.2;
+  }
+  h3 {
+    letter-spacing: -0.012em;
+    line-height: 1.25;
+  }
+  /* Body stays near 0 — don't over-tighten small text */
+  p, li {
+    letter-spacing: 0;
   }
   /* Mono labels */
   .font-mono {
@@ -179,12 +197,12 @@
 
 /* ─── View Transition Keyframes ──────────────────────────── */
 
-/* Default page enter/exit */
+/* Default page enter/exit — tighter, more decisive (Apple: small purposeful displacement) */
 ::view-transition-old(root) {
-  animation: 200ms ease-in both vt-fade-out;
+  animation: 160ms ease-in both vt-fade-out;
 }
 ::view-transition-new(root) {
-  animation: 280ms ease-out 200ms both vt-fade-in;
+  animation: 240ms ease-out 160ms both vt-fade-in;
 }
 
 @keyframes vt-fade-out {
@@ -195,16 +213,16 @@
   }
   to {
     opacity: 0;
-    filter: blur(2px);
-    transform: translateY(-6px);
+    filter: blur(1.5px);
+    transform: translateY(-4px);
   }
 }
 
 @keyframes vt-fade-in {
   from {
     opacity: 0;
-    filter: blur(2px);
-    transform: translateY(8px);
+    filter: blur(1.5px);
+    transform: translateY(6px);
   }
   to {
     opacity: 1;
@@ -225,58 +243,78 @@
   animation: none;
 }
 
-/* Nav-forward directional slide */
+/* Nav-forward directional slide — smaller displacement, symmetric with back */
 ::view-transition-old(.nav-forward) {
-  animation: 180ms ease-in both vt-slide-out-left;
+  animation: 150ms ease-in both vt-slide-out-left;
 }
 ::view-transition-new(.nav-forward) {
-  animation: 280ms ease-out 180ms both vt-slide-in-right;
+  animation: 240ms ease-out 150ms both vt-slide-in-right;
 }
 
 /* Nav-back directional slide */
 ::view-transition-old(.nav-back) {
-  animation: 180ms ease-in both vt-slide-out-right;
+  animation: 150ms ease-in both vt-slide-out-right;
 }
 ::view-transition-new(.nav-back) {
-  animation: 280ms ease-out 180ms both vt-slide-in-left;
+  animation: 240ms ease-out 150ms both vt-slide-in-left;
 }
 
 @keyframes vt-slide-out-left {
   to {
     opacity: 0;
-    transform: translateX(-40px);
+    transform: translateX(-28px);
   }
 }
 @keyframes vt-slide-in-right {
   from {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(28px);
   }
 }
 @keyframes vt-slide-out-right {
   to {
     opacity: 0;
-    transform: translateX(40px);
+    transform: translateX(28px);
   }
 }
 @keyframes vt-slide-in-left {
   from {
     opacity: 0;
-    transform: translateX(-40px);
+    transform: translateX(-28px);
   }
 }
 
 /* ─── Reduced Motion ─────────────────────────────────────── */
+/* Apple: replace slide/spring with a short cross-fade — not silence */
 @media (prefers-reduced-motion: reduce) {
-  ::view-transition-old(*),
-  ::view-transition-new(*),
-  ::view-transition-group(*) {
-    animation-duration: 0s !important;
-    animation-delay: 0s !important;
+  /* Page transitions: cross-fade instead of slide */
+  ::view-transition-old(root),
+  ::view-transition-new(root),
+  ::view-transition-old(.nav-forward),
+  ::view-transition-new(.nav-forward),
+  ::view-transition-old(.nav-back),
+  ::view-transition-new(.nav-back) {
+    animation: none !important;
+    mix-blend-mode: normal !important;
   }
+  ::view-transition-old(root) { opacity: 1; }
+  ::view-transition-new(root) { opacity: 1; }
+
+  /* All other motion: collapse to imperceptible duration */
   * {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
+  }
+}
+
+/* ─── Reduced Transparency ───────────────────────────────── */
+/* Apple: make translucent surfaces frostier/solid when transparency is reduced */
+@media (prefers-reduced-transparency: reduce) {
+  nav {
+    backdrop-filter: none !important;
+    -webkit-backdrop-filter: none !important;
+    background-color: var(--background) !important;
+    border-color: var(--border) !important;
   }
 }

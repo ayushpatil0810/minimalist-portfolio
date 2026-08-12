@@ -1,7 +1,7 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useState, useEffect, useCallback, useRef } from "react";
+import { useState, useEffect, useRef } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
@@ -23,7 +23,7 @@ function StatPill({ label, value }: { label: string; value: string | number }) {
       initial={{ opacity: 0, y: 8 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
-      transition={{ duration: 0.4 }}
+      transition={{ type: "spring", bounce: 0, duration: 0.4 }}
       className="flex flex-col gap-0.5"
     >
       <span className="text-[1.1rem] font-semibold tracking-tight tabular-nums text-foreground">
@@ -83,34 +83,50 @@ export function GithubActivity() {
     mostActive: string;
   } | null>(null);
 
+  // Stores the latest data received from the calendar library.
+  // Written synchronously during GitHubCalendar's render; read by useEffect below.
   const pendingDataRef = useRef<ContribDay[] | null>(null);
+  // Counter bumped (via ref) each time new data arrives, so useEffect can detect it.
+  const [dataVersion, setDataVersion] = useState(0);
 
   useEffect(() => {
     setMounted(true);
   }, []);
 
-  const currentTheme = theme === "system" ? systemTheme : theme;
-  const isDark = currentTheme === "dark";
-
-  // Safely schedule stats update after render pass completes
+  // Process stats whenever new data has been signalled via dataVersion
   useEffect(() => {
     if (pendingDataRef.current) {
       setStats(computeStats(pendingDataRef.current));
-      pendingDataRef.current = null;
+      // Don't null the ref here — keep it for potential re-renders
     }
-  });
+  }, [dataVersion]);
 
-  const transformData = useCallback((data: ContribDay[]) => {
-    pendingDataRef.current = data;
+  const currentTheme = theme === "system" ? systemTheme : theme;
+  const isDark = currentTheme === "dark";
+
+  // transformData is called synchronously by GitHubCalendar during its render.
+  // Rules: must NOT call setState here. Store data in ref and bump a version
+  // counter via a ref so the useEffect above can pick it up after the render.
+  const versionRef = useRef(0);
+  const transformData = (data: ContribDay[]) => {
+    // Only re-signal if data identity has changed (library re-fetched or changed)
+    if (data !== pendingDataRef.current) {
+      pendingDataRef.current = data;
+      // Increment stored version; schedule state bump after this render via queueMicrotask
+      const nextVersion = ++versionRef.current;
+      // Use queueMicrotask to defer past the current render but before paint —
+      // safe, no re-render loop because dataVersion only changes when data changes
+      queueMicrotask(() => setDataVersion(nextVersion));
+    }
     return data;
-  }, []);
+  };
 
   return (
     <motion.section
-      initial={{ opacity: 0, y: 20 }}
+      initial={{ opacity: 0, y: 12 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-80px" }}
-      transition={{ duration: 0.5 }}
+      transition={{ type: "spring", bounce: 0, duration: 0.5 }}
       className="mb-24"
     >
       {/* Header row with stats */}

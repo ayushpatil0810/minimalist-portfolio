@@ -16,13 +16,18 @@ export function FeaturedCard({
 }) {
   return (
     <motion.div
-      initial={{ opacity: 0, y: 24 }}
+      initial={{ opacity: 0, y: 20 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-60px" }}
-      transition={{ duration: 0.5, delay: index * 0.1, ease: [0.25, 0.46, 0.45, 0.94] }}
-      className="h-full"
+      transition={{ type: "spring", bounce: 0, duration: 0.5, delay: index * 0.08 }}
+      whileHover={{ scale: 1.003 }}
+      whileTap={{ scale: 0.99 }}
+      // Card hover/tap uses a spring for interruptibility
+      // (Framer Motion applies the whileHover/whileTap spring to the element itself)
+      className="h-full cursor-pointer"
+      style={{ willChange: "transform" }}
     >
-      <div className="group relative flex flex-col border border-border/60 hover:border-border transition-all duration-300 overflow-hidden h-full">
+      <div className="group relative flex flex-col border border-border/60 hover:border-border transition-[border-color,box-shadow] duration-300 overflow-hidden h-full hover:shadow-[0_4px_24px_rgba(0,0,0,0.06)] dark:hover:shadow-[0_4px_24px_rgba(0,0,0,0.25)]">
         {/* Screenshot if available */}
         {project.image && (
           <Link
@@ -31,14 +36,20 @@ export function FeaturedCard({
             style={{ viewTransitionName: `project-image-${project.slug}` }}
             tabIndex={-1}
           >
-            <Image
-              src={project.image}
-              alt={`${project.name} screenshot`}
-              width={800}
-              height={450}
-              className="w-full h-full object-cover group-hover:scale-[1.02] transition-transform duration-500 ease-out"
-              priority={index === 0}
-            />
+            <motion.div
+              className="w-full h-full"
+              whileHover={{ scale: 1.025 }}
+              transition={{ type: "spring", bounce: 0, duration: 0.4 }}
+            >
+              <Image
+                src={project.image}
+                alt={`${project.name} screenshot`}
+                width={800}
+                height={450}
+                className="w-full h-full object-cover"
+                priority={index === 0}
+              />
+            </motion.div>
           </Link>
         )}
 
