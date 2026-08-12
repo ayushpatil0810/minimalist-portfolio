@@ -1,12 +1,14 @@
 "use client";
 
 import { useTheme } from "next-themes";
-import { useState, useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import dynamic from "next/dynamic";
 
-const GitHubCalendar = dynamic(
-  () => import("react-github-calendar").then((mod) => mod.GitHubCalendar),
+// Use the lower-level ActivityCalendar directly so we can supply pre-fetched data.
+// react-activity-calendar is a peer/transitive dep of react-github-calendar.
+const ActivityCalendar = dynamic(
+  () => import("react-activity-calendar").then((mod) => mod.ActivityCalendar),
   {
     ssr: false,
     loading: () => <div className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse" />,
@@ -14,8 +16,72 @@ const GitHubCalendar = dynamic(
 );
 
 const USERNAME = "ayushpatil0810";
+const YEAR = new Date().getFullYear();
+
+// Cache key includes year so the cache auto-invalidates on Jan 1
+const CACHE_KEY = `gh_activity_${USERNAME}_${YEAR}`;
+const CACHE_TTL_MS = 24 * 60 * 60 * 1000; // 24 hours
 
 type ContribDay = { date: string; count: number; level: 0 | 1 | 2 | 3 | 4 };
+
+interface CacheEntry {
+  data: ContribDay[];
+  ts: number;
+}
+
+function readCache(): ContribDay[] | null {
+  try {
+    const raw = localStorage.getItem(CACHE_KEY);
+    if (!raw) return null;
+    const entry: CacheEntry = JSON.parse(raw);
+    if (Date.now() - entry.ts > CACHE_TTL_MS) {
+      localStorage.removeItem(CACHE_KEY);
+      return null;
+    }
+    return entry.data;
+  } catch {
+    return null;
+  }
+}
+
+function writeCache(data: ContribDay[]) {
+  try {
+    localStorage.setItem(CACHE_KEY, JSON.stringify({ data, ts: Date.now() } satisfies CacheEntry));
+  } catch {
+    // Quota exceeded or private-browsing restriction — silently skip
+  }
+}
+
+function computeStats(data: ContribDay[]) {
+  const total = data.reduce((s, d) => s + d.count, 0);
+
+  let maxStreak = 0;
+  let cur = 0;
+  for (const d of data) {
+    if (d.count > 0) { cur++; maxStreak = Math.max(maxStreak, cur); }
+    else { cur = 0; }
+  }
+
+  const byDay: Record<string, number> = {
+    Sun: 0, Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0,
+  };
+  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
+  for (const d of data) {
+    if (d.count > 0) {
+      const dow = dayNames[new Date(d.date).getDay()] ?? "Sun";
+      byDay[dow] = (byDay[dow] ?? 0) + d.count;
+    }
+  }
+  const mostActive = Object.entries(byDay).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "-";
+
+  return { total, maxStreak, mostActive };
+}
+
+// Warm stone palette, amber at max level
+const explicitTheme = {
+  light: ["#f5f5f4", "#d6d3d1", "#a8a29e", "#78716c", "#f59e0b"],
+  dark: ["#1c1917", "#44403c", "#78716c", "#a8a29e", "#f59e0b"],
+};
 
 function StatPill({ label, value }: { label: string; value: string | number }) {
   return (
@@ -36,90 +102,46 @@ function StatPill({ label, value }: { label: string; value: string | number }) {
   );
 }
 
-function computeStats(data: ContribDay[]) {
-  const total = data.reduce((s, d) => s + d.count, 0);
-
-  // Longest streak
-  let maxStreak = 0;
-  let cur = 0;
-  for (const d of data) {
-    if (d.count > 0) {
-      cur++;
-      maxStreak = Math.max(maxStreak, cur);
-    } else {
-      cur = 0;
-    }
-  }
-
-  // Most active day of week
-  const byDay: Record<string, number> = {
-    Sun: 0, Mon: 0, Tue: 0, Wed: 0, Thu: 0, Fri: 0, Sat: 0,
-  };
-  const dayNames = ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"];
-  for (const d of data) {
-    if (d.count > 0) {
-      const dayIdx = new Date(d.date).getDay();
-      const dow = dayNames[dayIdx] || "Sun";
-      byDay[dow] = (byDay[dow] || 0) + d.count;
-    }
-  }
-  const mostActive = Object.entries(byDay).sort((a, b) => b[1] - a[1])[0]?.[0] ?? "-";
-
-  return { total, maxStreak, mostActive };
-}
-
-// Warm stone palette, amber at max level
-const explicitTheme = {
-  light: ["#f5f5f4", "#d6d3d1", "#a8a29e", "#78716c", "#f59e0b"],
-  dark: ["#1c1917", "#44403c", "#78716c", "#a8a29e", "#f59e0b"],
-};
-
 export function GithubActivity() {
   const { theme, systemTheme } = useTheme();
   const [mounted, setMounted] = useState(false);
+  const [activityData, setActivityData] = useState<ContribDay[] | null>(null);
   const [stats, setStats] = useState<{
     total: number;
     maxStreak: number;
     mostActive: string;
   } | null>(null);
-
-  // Stores the latest data received from the calendar library.
-  // Written synchronously during GitHubCalendar's render; read by useEffect below.
-  const pendingDataRef = useRef<ContribDay[] | null>(null);
-  // Counter bumped (via ref) each time new data arrives, so useEffect can detect it.
-  const [dataVersion, setDataVersion] = useState(0);
+  const [error, setError] = useState(false);
 
   useEffect(() => {
     setMounted(true);
-  }, []);
 
-  // Process stats whenever new data has been signalled via dataVersion
-  useEffect(() => {
-    if (pendingDataRef.current) {
-      setStats(computeStats(pendingDataRef.current));
-      // Don't null the ref here — keep it for potential re-renders
+    // 1. Try localStorage cache first — no network call on cache hit
+    const cached = readCache();
+    if (cached) {
+      setActivityData(cached);
+      setStats(computeStats(cached));
+      return;
     }
-  }, [dataVersion]);
+
+    // 2. Cache miss — fetch from the same API react-github-calendar uses
+    fetch(`https://github-contributions-api.jogruber.de/v4/${USERNAME}?y=${YEAR}`)
+      .then((res) => {
+        if (!res.ok) throw new Error(`HTTP ${res.status}`);
+        return res.json() as Promise<{ contributions: ContribDay[] }>;
+      })
+      .then(({ contributions }) => {
+        writeCache(contributions);
+        setActivityData(contributions);
+        setStats(computeStats(contributions));
+      })
+      .catch(() => {
+        setError(true);
+      });
+  }, []);
 
   const currentTheme = theme === "system" ? systemTheme : theme;
   const isDark = currentTheme === "dark";
-
-  // transformData is called synchronously by GitHubCalendar during its render.
-  // Rules: must NOT call setState here. Store data in ref and bump a version
-  // counter via a ref so the useEffect above can pick it up after the render.
-  const versionRef = useRef(0);
-  const transformData = (data: ContribDay[]) => {
-    // Only re-signal if data identity has changed (library re-fetched or changed)
-    if (data !== pendingDataRef.current) {
-      pendingDataRef.current = data;
-      // Increment stored version; schedule state bump after this render via queueMicrotask
-      const nextVersion = ++versionRef.current;
-      // Use queueMicrotask to defer past the current render but before paint —
-      // safe, no re-render loop because dataVersion only changes when data changes
-      queueMicrotask(() => setDataVersion(nextVersion));
-    }
-    return data;
-  };
 
   return (
     <motion.section
@@ -145,27 +167,30 @@ export function GithubActivity() {
 
       {/* Heatmap */}
       <div className="overflow-x-auto w-full pb-2 scrollbar-thin">
-        {mounted ? (
-          <GitHubCalendar
-            username={USERNAME}
-            year={new Date().getFullYear()}
+        {!mounted || (!activityData && !error) ? (
+          // Skeleton shown until mount + data ready (or cache hit is instant)
+          <div className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse" />
+        ) : error || !activityData ? (
+          <p className="text-[0.75rem] text-muted-foreground/50 font-mono">
+            Activity unavailable
+          </p>
+        ) : (
+          <ActivityCalendar
+            data={activityData}
             colorScheme={isDark ? "dark" : "light"}
             theme={explicitTheme}
             blockSize={11}
             blockMargin={3}
             blockRadius={2}
             fontSize={11}
-            transformData={transformData as (data: ContribDay[]) => ContribDay[]}
             labels={{
               totalCount: "{{count}} contributions in {{year}}",
             }}
             style={{
               color: isDark ? "#a8a29e" : "#78716c",
             }}
-            showTotalCount={false}
+            showWeekdayLabels
           />
-        ) : (
-          <div className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse" />
         )}
       </div>
     </motion.section>
