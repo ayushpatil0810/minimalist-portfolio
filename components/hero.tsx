@@ -158,10 +158,10 @@ export function Hero() {
             rel="noopener noreferrer"
             className="group text-[0.8rem] text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-1 lowercase font-mono"
           >
-            {label}
+            <span>{label}</span>
             <ArrowUpRightIcon
               size={11}
-              className="opacity-0 group-hover:opacity-100 transition-opacity duration-200"
+              className="opacity-0 group-hover:opacity-100 transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
             />
           </Link>
         ))}
@@ -180,11 +180,14 @@ export function Hero() {
         >
           <Link
             href="/resume"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors duration-200"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors duration-200"
             style={{ letterSpacing: "-0.01em" }}
           >
-            View Resume
-            <ArrowUpRightIcon size={13} />
+            <span>View Resume</span>
+            <ArrowUpRightIcon
+              size={13}
+              className="transition-transform duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </Link>
         </motion.div>
         <motion.div
@@ -193,10 +196,14 @@ export function Hero() {
         >
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium hover:bg-muted/60 transition-colors duration-200"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium hover:bg-muted/60 transition-colors duration-200"
             style={{ letterSpacing: "-0.01em" }}
           >
-            See Projects
+            <span>See Projects</span>
+            <ArrowUpRightIcon
+              size={13}
+              className="opacity-60 group-hover:opacity-100 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
+            />
           </Link>
         </motion.div>
       </motion.div>

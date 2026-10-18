@@ -2,7 +2,7 @@
 
 import { useTheme } from "next-themes";
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import dynamic from "next/dynamic";
 
 // Use the lower-level ActivityCalendar directly so we can supply pre-fetched data.
@@ -165,33 +165,53 @@ export function GithubActivity() {
         )}
       </div>
 
-      {/* Heatmap */}
+      {/* Heatmap with Transitions.dev P14 cross-blur reveal */}
       <div className="overflow-x-auto w-full pb-2 scrollbar-thin">
-        {!mounted || (!activityData && !error) ? (
-          // Skeleton shown until mount + data ready (or cache hit is instant)
-          <div className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse" />
-        ) : error || !activityData ? (
-          <p className="text-[0.75rem] text-muted-foreground/50 font-mono">
-            Activity unavailable
-          </p>
-        ) : (
-          <ActivityCalendar
-            data={activityData}
-            colorScheme={isDark ? "dark" : "light"}
-            theme={explicitTheme}
-            blockSize={11}
-            blockMargin={3}
-            blockRadius={2}
-            fontSize={11}
-            labels={{
-              totalCount: "{{count}} contributions in {{year}}",
-            }}
-            style={{
-              color: isDark ? "#a8a29e" : "#78716c",
-            }}
-            showWeekdayLabels
-          />
-        )}
+        <AnimatePresence mode="wait">
+          {!mounted || (!activityData && !error) ? (
+            <motion.div
+              key="skeleton"
+              initial={{ opacity: 0, filter: "blur(2px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              exit={{ opacity: 0, filter: "blur(2px)" }}
+              transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+              className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse"
+            />
+          ) : error || !activityData ? (
+            <motion.p
+              key="error"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              className="text-[0.75rem] text-muted-foreground/50 font-mono"
+            >
+              Activity unavailable
+            </motion.p>
+          ) : (
+            <motion.div
+              key="calendar"
+              initial={{ opacity: 0, filter: "blur(2px)" }}
+              animate={{ opacity: 1, filter: "blur(0px)" }}
+              transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+            >
+              <ActivityCalendar
+                data={activityData}
+                colorScheme={isDark ? "dark" : "light"}
+                theme={explicitTheme}
+                blockSize={11}
+                blockMargin={3}
+                blockRadius={2}
+                fontSize={11}
+                labels={{
+                  totalCount: "{{count}} contributions in {{year}}",
+                }}
+                style={{
+                  color: isDark ? "#a8a29e" : "#78716c",
+                }}
+                showWeekdayLabels
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
     </motion.section>
   );

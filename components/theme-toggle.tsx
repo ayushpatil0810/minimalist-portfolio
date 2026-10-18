@@ -36,10 +36,13 @@ export function ThemeToggle() {
       <AnimatePresence mode="wait" initial={false}>
         <motion.div
           key={theme}
-          initial={{ y: -10, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          exit={{ y: 10, opacity: 0 }}
-          transition={{ type: "spring", bounce: 0, duration: 0.2 }}
+          initial={{ opacity: 0, scale: 0.25, filter: "blur(2px)", rotate: theme === "dark" ? -30 : 30 }}
+          animate={{ opacity: 1, scale: 1, filter: "blur(0px)", rotate: 0 }}
+          exit={{ opacity: 0, scale: 0.25, filter: "blur(2px)", rotate: theme === "dark" ? 30 : -30 }}
+          transition={{
+            duration: 0.25,
+            ease: [0.22, 1, 0.36, 1],
+          }}
           className="flex items-center justify-center"
         >
           {theme === "dark" ? <SunIcon size={18} /> : <MoonIcon size={18} />}
