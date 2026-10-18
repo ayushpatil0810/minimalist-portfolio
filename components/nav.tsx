@@ -7,6 +7,8 @@ import { motion } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { useState, useEffect } from "react";
 
+import { ProgressiveBlur } from "@/components/ui/progressive-blur";
+
 const navLinks = [
   { href: "/", label: "home" },
   { href: "/projects", label: "projects" },
@@ -35,6 +37,23 @@ export function Nav() {
       className="sticky top-0 z-50 w-full h-20 flex items-center pointer-events-none"
       style={{ viewTransitionName: "site-header" }}
     >
+      {/* Top viewport progressive blur & gradient melt */}
+      <div
+        className={cn(
+          "pointer-events-none absolute inset-x-0 top-0 h-24 -z-10 transition-opacity duration-300",
+          isScrolled ? "opacity-100" : "opacity-0"
+        )}
+        aria-hidden="true"
+      >
+        <ProgressiveBlur
+          direction="top"
+          blurIntensity={1.2}
+          blurLayers={8}
+          className="absolute inset-0"
+        />
+        <div className="absolute inset-0 bg-gradient-to-b from-background/80 via-background/40 to-transparent" />
+      </div>
+
       <nav
         className={cn(
           "pointer-events-auto w-[calc(100%-2rem)] max-w-4xl mx-auto flex items-center justify-between rounded-full border px-4 sm:px-6 py-2.5",

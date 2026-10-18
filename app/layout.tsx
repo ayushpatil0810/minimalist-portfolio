@@ -1,8 +1,9 @@
 import type { Metadata } from "next";
-import { Syne, DM_Sans, JetBrains_Mono } from "next/font/google";
+import { Syne, Plus_Jakarta_Sans, JetBrains_Mono } from "next/font/google";
 import "./globals.css";
 import { cn } from "@/lib/utils";
 import { ThemeProvider } from "@/components/theme-provider";
+import { BottomBlur } from "@/components/bottom-blur";
 import { Toaster } from "react-hot-toast";
 import { Analytics } from "@vercel/analytics/next";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -14,11 +15,11 @@ const syne = Syne({
   weight: ["500", "600", "700"],
 });
 
-const dmSans = DM_Sans({
-  variable: "--font-dm-sans",
+const plusJakartaSans = Plus_Jakarta_Sans({
+  variable: "--font-plus-jakarta-sans",
   subsets: ["latin"],
   display: "swap",
-  weight: ["400", "500", "600"],
+  weight: ["400", "500", "600", "700"],
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -96,7 +97,7 @@ export default function RootLayout({
         "h-full",
         "antialiased",
         syne.variable,
-        dmSans.variable,
+        plusJakartaSans.variable,
         jetbrainsMono.variable,
       )}
       suppressHydrationWarning
@@ -104,6 +105,7 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col bg-background text-foreground font-sans">
         <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
           {children}
+          <BottomBlur />
           <Toaster
             position="bottom-right"
             toastOptions={{

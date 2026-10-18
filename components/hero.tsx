@@ -9,7 +9,7 @@ import { ArrowUpRightIcon } from "@phosphor-icons/react";
 import { useRef } from "react";
 import { Highlighter } from "@/components/highlighter";
 
-const headline = ["Mostly backend.", "Occasionally frontend."];
+const headline = ["Building scalable software", "& AI-powered products."];
 
 /** Split text into word-level spans with spring stagger */
 function SplitText({
@@ -135,7 +135,7 @@ export function Hero() {
           className="block mt-2 text-muted-foreground font-normal text-[1.6rem] md:text-[2.2rem] leading-snug"
           style={{ letterSpacing: "-0.018em" }}
         >
-          Obsessed with building scalable systems &{" "}
+          Focused on software engineering, system design, and{" "}
           <Highlighter action="underline" color="var(--accent-color)" strokeWidth={2.5} animationDuration={1000}>
             Generative AI
           </Highlighter>
