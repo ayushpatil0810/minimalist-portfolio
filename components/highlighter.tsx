@@ -30,7 +30,7 @@ interface HighlighterProps {
 export function Highlighter({
   children,
   action = "highlight",
-  color = "#f59e0b",
+  color = "#2667ff",
   strokeWidth = 1.5,
   animationDuration = 800,
   iterations = 1,
@@ -57,7 +57,7 @@ export function Highlighter({
       if (computed) {
         setResolvedColor(computed);
       } else {
-        setResolvedColor("#f59e0b");
+        setResolvedColor("#2667ff");
       }
     } else {
       setResolvedColor(color);

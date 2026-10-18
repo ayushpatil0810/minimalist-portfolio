@@ -215,7 +215,7 @@ export default async function ProjectPage({ params }: Props) {
 
             {/* Insight */}
             {project.insight && (
-              <blockquote className="pl-4 border-l-2 border-amber-400/60 italic text-[0.875rem] text-foreground/70">
+              <blockquote className="pl-4 border-l-2 border-[var(--accent-color)]/60 italic text-[0.875rem] text-foreground/70">
                 &ldquo;{project.insight}&rdquo;
               </blockquote>
             )}

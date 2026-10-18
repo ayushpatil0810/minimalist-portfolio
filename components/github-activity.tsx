@@ -77,10 +77,10 @@ function computeStats(data: ContribDay[]) {
   return { total, maxStreak, mostActive };
 }
 
-// Warm stone palette, amber at max level
+// Stone palette with electric blue accent at max level
 const explicitTheme = {
-  light: ["#f5f5f4", "#d6d3d1", "#a8a29e", "#78716c", "#f59e0b"],
-  dark: ["#1c1917", "#44403c", "#78716c", "#a8a29e", "#f59e0b"],
+  light: ["#f5f5f4", "#d6d3d1", "#a8a29e", "#78716c", "#2667ff"],
+  dark: ["#1c1917", "#44403c", "#78716c", "#a8a29e", "#2667ff"],
 };
 
 function StatPill({ label, value }: { label: string; value: string | number }) {

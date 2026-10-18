@@ -80,24 +80,19 @@ export function ProjectCard({
         {/* Content */}
         <div className="p-5 flex flex-col gap-3 flex-1">
           <div className="flex items-start justify-between gap-3">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[0.62rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/80">
-                {project.category} · {project.year}
-              </span>
-              <h3
-                className={`tracking-tight text-foreground font-semibold ${
-                  featured ? "text-[1.2rem]" : "text-[1rem]"
-                }`}
+            <h3
+              className={`tracking-tight text-foreground font-semibold ${
+                featured ? "text-[1.2rem]" : "text-[1rem]"
+              }`}
+            >
+              <Link
+                href={`/projects/${project.slug}`}
+                className="hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
               >
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
-                >
-                  {project.name}
-                </Link>
-              </h3>
-            </div>
-            <div className="flex items-center gap-2 shrink-0 mt-1">
+                {project.name}
+              </Link>
+            </h3>
+            <div className="flex items-center gap-2 shrink-0">
               {project.githubUrl && (
                 <a
                   href={project.githubUrl}

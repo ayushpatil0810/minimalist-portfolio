@@ -9,10 +9,17 @@ import { useState, useEffect } from "react";
 
 import { ProgressiveBlur } from "@/components/ui/progressive-blur";
 
-const navLinks = [
+interface NavLinkItem {
+  href: string;
+  label: string;
+  external?: boolean;
+}
+
+const navLinks: NavLinkItem[] = [
   { href: "/", label: "home" },
   { href: "/projects", label: "projects" },
   { href: "/about", label: "about" },
+  { href: "https://blog.ayushpatil.in", label: "blog", external: true },
 ];
 
 const LOGO_CHARS = "ayush patil".split("");
@@ -20,7 +27,6 @@ const LOGO_CHARS = "ayush patil".split("");
 export function Nav() {
   const pathname = usePathname();
   const [isScrolled, setIsScrolled] = useState(false);
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -93,57 +99,37 @@ export function Nav() {
           </motion.span>
         </Link>
 
-        {/* Center links */}
-        <div
-          className="flex items-center gap-1"
-          onMouseLeave={() => setHoveredIndex(null)}
-        >
-          {navLinks.map(({ href, label }, index) => {
-            const isActive =
-              href === "/" ? pathname === "/" : pathname.startsWith(href);
-            return (
-              <Link
-                key={href}
-                href={href}
-                onMouseEnter={() => setHoveredIndex(index)}
-                className={cn(
-                  "relative px-3.5 py-1 text-xs rounded-full lowercase tracking-wide",
-                  "transition-colors duration-200",
-                  isActive
-                    ? "text-foreground font-medium"
-                    : "text-muted-foreground hover:text-foreground",
-                )}
-              >
-                {hoveredIndex === index && !isActive && (
-                  <motion.span
-                    layoutId="nav-hover-pill"
-                    className="absolute inset-0 rounded-full bg-foreground/5 dark:bg-foreground/10"
-                    transition={{ type: "spring", bounce: 0.1, duration: 0.3 }}
-                  />
-                )}
-                {isActive && (
-                  <motion.span
-                    layoutId="nav-pill"
-                    className="absolute inset-0 rounded-full bg-foreground/8 dark:bg-foreground/15"
-                    transition={{ type: "spring", bounce: 0.15, duration: 0.35 }}
-                  />
-                )}
-                <span className="relative z-10">{label}</span>
-              </Link>
-            );
-          })}
-        </div>
+        {/* Right side: navigation links, blog & theme toggle */}
+        <div className="flex items-center gap-1 sm:gap-2">
+          <div className="flex items-center gap-0.5 sm:gap-1">
+            {navLinks.map(({ href, label, external }) => {
+              const isActive =
+                !external &&
+                (href === "/" ? pathname === "/" : pathname.startsWith(href));
+              return (
+                <Link
+                  key={href}
+                  href={href}
+                  target={external ? "_blank" : undefined}
+                  rel={external ? "noopener noreferrer" : undefined}
+                  className={cn(
+                    "px-2.5 sm:px-3 py-1 text-xs lowercase tracking-wide inline-flex items-center gap-0.5",
+                    "transition-colors duration-200",
+                    isActive
+                      ? "text-foreground font-medium"
+                      : "text-muted-foreground hover:text-foreground",
+                    external && "hidden min-[400px]:inline-flex"
+                  )}
+                >
+                  <span>{label}</span>
+                  {external && (
+                    <span className="text-[10px] opacity-70">↗</span>
+                  )}
+                </Link>
+              );
+            })}
+          </div>
 
-        {/* Right side actions */}
-        <div className="flex items-center gap-3">
-          <Link
-            href="https://blog.ayushpatil.in"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-muted-foreground hover:text-foreground transition-colors lowercase text-xs tracking-wide hidden sm:block"
-          >
-            blog ↗
-          </Link>
           <ThemeToggle />
         </div>
       </nav>

@@ -56,20 +56,15 @@ export function FeaturedCard({
         <div className="p-5 flex flex-col gap-3 flex-1">
           {/* Header */}
           <div className="flex items-start justify-between gap-4">
-            <div className="flex flex-col gap-0.5">
-              <span className="text-[0.65rem] font-mono uppercase tracking-[0.18em] text-muted-foreground/80">
-                {project.category} · {project.year}
-              </span>
-              <h3 className="text-[1.05rem] font-semibold tracking-tight text-foreground">
-                <Link
-                  href={`/projects/${project.slug}`}
-                  className="hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
-                >
-                  {project.name}
-                </Link>
-              </h3>
-            </div>
-            <div className="flex items-center gap-2 shrink-0 mt-1 relative z-10">
+            <h3 className="text-[1.05rem] font-semibold tracking-tight text-foreground">
+              <Link
+                href={`/projects/${project.slug}`}
+                className="hover:underline focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2 rounded-sm"
+              >
+                {project.name}
+              </Link>
+            </h3>
+            <div className="flex items-center gap-2 shrink-0 relative z-10">
               {project.githubUrl && (
                 <a
                   href={project.githubUrl}

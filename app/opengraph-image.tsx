@@ -31,7 +31,7 @@ export default async function Image() {
           }}
         />
 
-        {/* Amber accent bar, top left */}
+        {/* Blue accent bar, top left */}
         <div
           style={{
             position: "absolute",
@@ -39,7 +39,7 @@ export default async function Image() {
             left: 72,
             width: 48,
             height: 3,
-            backgroundColor: "#f59e0b",
+            backgroundColor: "#2667ff",
           }}
         />
 
@@ -97,7 +97,7 @@ export default async function Image() {
               style={{
                 width: 32,
                 height: 1,
-                backgroundColor: "#f59e0b",
+                backgroundColor: "#2667ff",
               }}
             />
             <div
