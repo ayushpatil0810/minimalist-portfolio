@@ -136,7 +136,7 @@ export function ContactForm() {
               placeholder="Your name"
               required
               className={cn(
-                "w-full bg-transparent border-b py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 transition-colors duration-200",
+                "w-full bg-muted/15 border px-3.5 py-2.5 rounded-xl text-[0.875rem] outline-none placeholder:text-muted-foreground/40 transition-colors duration-200",
                 errorField === "name" ? "border-red-500/80 text-red-500" : "border-border/60 focus:border-foreground"
               )}
             />
@@ -159,7 +159,7 @@ export function ContactForm() {
               placeholder="you@example.com"
               required
               className={cn(
-                "w-full bg-transparent border-b py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 transition-colors duration-200",
+                "w-full bg-muted/15 border px-3.5 py-2.5 rounded-xl text-[0.875rem] outline-none placeholder:text-muted-foreground/40 transition-colors duration-200",
                 errorField === "email" ? "border-red-500/80 text-red-500" : "border-border/60 focus:border-foreground"
               )}
             />
@@ -181,7 +181,7 @@ export function ContactForm() {
               placeholder="What's on your mind?"
               required
               className={cn(
-                "w-full bg-transparent border-b py-2 text-[0.875rem] outline-none placeholder:text-muted-foreground/40 transition-colors duration-200 resize-none",
+                "w-full bg-muted/15 border px-3.5 py-2.5 rounded-xl text-[0.875rem] outline-none placeholder:text-muted-foreground/40 transition-colors duration-200 resize-none",
                 errorField === "message" ? "border-red-500/80 text-red-500" : "border-border/60 focus:border-foreground"
               )}
             />
@@ -193,7 +193,7 @@ export function ContactForm() {
             whileTap={{ scale: loading ? 1 : 0.97 }}
             transition={{ type: "spring", bounce: 0, duration: 0.15 }}
             className={cn(
-              "group inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-5 py-2.5 transition-all duration-300 disabled:opacity-90 font-medium cursor-pointer",
+              "group inline-flex items-center gap-2 text-[0.875rem] tracking-tight px-6 py-2.5 rounded-full transition-all duration-300 disabled:opacity-90 font-medium cursor-pointer shadow-sm",
               isSuccess
                 ? "bg-emerald-600 text-white dark:bg-emerald-500 dark:text-zinc-950"
                 : "bg-foreground text-background hover:bg-foreground/85"

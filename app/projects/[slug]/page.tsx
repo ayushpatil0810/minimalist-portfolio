@@ -89,7 +89,7 @@ export default async function ProjectPage({ params }: Props) {
         <div className="mb-8">
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 text-[0.78rem] text-muted-foreground hover:text-foreground transition-colors font-mono"
+            className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/50 bg-muted/15 hover:bg-muted/35 text-[0.78rem] text-muted-foreground hover:text-foreground transition-colors font-mono"
           >
             <ArrowLeftIcon size={13} />
             all projects
@@ -119,7 +119,7 @@ export default async function ProjectPage({ params }: Props) {
                 href={project.liveUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors shadow-sm"
               >
                 Live Site
                 <ArrowUpRightIcon size={13} />
@@ -130,7 +130,7 @@ export default async function ProjectPage({ params }: Props) {
                 href={project.githubUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2 border border-border text-sm font-medium hover:bg-muted/60 transition-colors"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium hover:bg-muted/60 transition-colors"
               >
                 <GithubLogoIcon size={15} />
                 View Source
@@ -263,7 +263,7 @@ export default async function ProjectPage({ params }: Props) {
         <div className="border-t border-border/50 pt-8 flex items-center justify-between gap-4">
           <Link
             href="/projects"
-            className="text-[0.78rem] text-muted-foreground hover:text-foreground transition-colors font-mono flex items-center gap-1.5"
+            className="text-[0.78rem] text-muted-foreground hover:text-foreground transition-colors font-mono flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border/50 bg-muted/15 hover:bg-muted/35"
           >
             <ArrowLeftIcon size={12} />
             Back to all projects
@@ -277,7 +277,7 @@ export default async function ProjectPage({ params }: Props) {
             return nextProject && nextProject.slug !== slug ? (
               <Link
                 href={`/projects/${nextProject.slug}`}
-                className="text-[0.78rem] text-muted-foreground hover:text-foreground transition-colors font-mono flex items-center gap-1.5"
+                className="text-[0.78rem] text-muted-foreground hover:text-foreground transition-colors font-mono flex items-center gap-1.5 px-3.5 py-1.5 rounded-full border border-border/50 bg-muted/15 hover:bg-muted/35"
               >
                 Next: {nextProject.name}
                 <ArrowUpRightIcon size={12} />

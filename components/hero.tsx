@@ -111,7 +111,7 @@ export function Hero() {
               initial={{ opacity: 0, x: -6 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ type: "spring", bounce: 0, duration: 0.4, delay: 0.55 }}
-              className="flex items-center mt-1"
+              className="flex items-center gap-2 mt-2 w-fit px-2.5 py-0.5 rounded-full border border-border/60 bg-muted/30"
             >
               <span className="text-[0.7rem] text-muted-foreground tracking-tight">
                 {openToWork.label}
@@ -148,7 +148,7 @@ export function Hero() {
         initial={{ opacity: 0, y: 8 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ type: "spring", bounce: 0, duration: 0.5, delay: 0.6 }}
-        className="flex items-center gap-4 flex-wrap mt-8 mb-8"
+        className="flex items-center gap-2 flex-wrap mt-8 mb-8"
       >
         {socials.slice(0, 4).map(({ href, label }) => (
           <Link
@@ -156,13 +156,15 @@ export function Hero() {
             href={href}
             target={href.startsWith("http") ? "_blank" : undefined}
             rel="noopener noreferrer"
-            className="group text-[0.8rem] text-muted-foreground hover:text-foreground transition-colors duration-200 flex items-center gap-1 lowercase font-mono"
+            className="group px-3 py-1 rounded-full border border-border/40 hover:border-border hover:bg-muted/40 text-[0.78rem] text-muted-foreground hover:text-foreground transition-all duration-200 flex items-center lowercase font-mono"
           >
             <span>{label}</span>
-            <ArrowUpRightIcon
-              size={11}
-              className="opacity-0 group-hover:opacity-100 transition-all duration-250 ease-[cubic-bezier(0.22,1,0.36,1)] group-hover:translate-x-0.5 group-hover:-translate-y-0.5"
-            />
+            <span className="w-0 group-hover:w-3 opacity-0 group-hover:opacity-100 overflow-hidden transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] inline-flex items-center group-hover:ml-1">
+              <ArrowUpRightIcon
+                size={11}
+                className="shrink-0 -translate-x-1 group-hover:translate-x-0 transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]"
+              />
+            </span>
           </Link>
         ))}
       </motion.div>
@@ -180,7 +182,7 @@ export function Hero() {
         >
           <Link
             href="/resume"
-            className="group inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors duration-200"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors duration-200 shadow-sm"
             style={{ letterSpacing: "-0.01em" }}
           >
             <span>View Resume</span>
@@ -196,7 +198,7 @@ export function Hero() {
         >
           <Link
             href="/projects"
-            className="group inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium hover:bg-muted/60 transition-colors duration-200"
+            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium hover:bg-muted/60 transition-colors duration-200"
             style={{ letterSpacing: "-0.01em" }}
           >
             <span>See Projects</span>

@@ -151,11 +151,11 @@ export function Nav() {
                     target={external ? "_blank" : undefined}
                     rel={external ? "noopener noreferrer" : undefined}
                     className={cn(
-                      "px-2.5 sm:px-3 py-1 text-xs lowercase tracking-wide inline-flex items-center gap-0.5",
+                      "px-2.5 sm:px-3 py-1 text-xs lowercase tracking-wide inline-flex items-center gap-0.5 rounded-full",
                       "transition-colors duration-200",
                       isActive
-                        ? "text-foreground font-medium"
-                        : "text-muted-foreground hover:text-foreground"
+                        ? "text-foreground font-medium bg-foreground/5 dark:bg-foreground/10"
+                        : "text-muted-foreground hover:text-foreground hover:bg-foreground/5 dark:hover:bg-foreground/5"
                     )}
                   >
                     <span>{label}</span>

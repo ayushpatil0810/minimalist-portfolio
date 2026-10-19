@@ -58,7 +58,7 @@ export function AboutContent() {
         <div className="flex flex-col gap-6">
           {sidebarItems.map((item, i) => (
             <FadeUp key={item.label} delay={0.2 + i * 0.06}>
-              <div className="flex flex-col gap-1.5">
+              <div className="flex flex-col gap-1.5 p-3.5 rounded-xl border border-border/40 bg-muted/10">
                 <SectionLabel>{item.label}</SectionLabel>
                 <p className="text-[0.82rem] text-foreground/80 leading-relaxed whitespace-pre-line">
                   {item.value}

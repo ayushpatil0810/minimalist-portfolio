@@ -90,12 +90,12 @@ function StatPill({ label, value }: { label: string; value: string | number }) {
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ type: "spring", bounce: 0, duration: 0.4 }}
-      className="flex flex-col gap-0.5"
+      className="flex flex-col gap-0.5 px-3.5 py-1.5 rounded-xl border border-border/50 bg-muted/15"
     >
-      <span className="text-[1.1rem] font-semibold tracking-tight tabular-nums text-foreground">
+      <span className="text-[1.05rem] font-semibold tracking-tight tabular-nums text-foreground">
         {value}
       </span>
-      <span className="text-[0.65rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">
+      <span className="text-[0.62rem] text-muted-foreground uppercase tracking-[0.15em] font-mono">
         {label}
       </span>
     </motion.div>
@@ -157,7 +157,7 @@ export function GithubActivity() {
           Activity
         </h2>
         {stats && (
-          <div className="flex items-end gap-8">
+          <div className="flex items-end gap-3 flex-wrap">
             <StatPill label="contributions" value={stats.total} />
             <StatPill label="longest streak" value={`${stats.maxStreak}d`} />
             <StatPill label="most active" value={stats.mostActive} />
@@ -166,7 +166,7 @@ export function GithubActivity() {
       </div>
 
       {/* Heatmap with Transitions.dev P14 cross-blur reveal */}
-      <div className="overflow-x-auto w-full pb-2 scrollbar-thin">
+      <div className="overflow-x-auto w-full p-4 sm:p-5 rounded-2xl border border-border/60 bg-muted/10 pb-3 scrollbar-thin">
         <AnimatePresence mode="wait">
           {!mounted || (!activityData && !error) ? (
             <motion.div
@@ -175,7 +175,7 @@ export function GithubActivity() {
               animate={{ opacity: 1, filter: "blur(0px)" }}
               exit={{ opacity: 0, filter: "blur(2px)" }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-              className="w-full h-[120px] rounded-sm bg-muted/20 animate-pulse"
+              className="w-full h-[120px] rounded-xl bg-muted/20 animate-pulse"
             />
           ) : error || !activityData ? (
             <motion.p
@@ -199,7 +199,7 @@ export function GithubActivity() {
                 theme={explicitTheme}
                 blockSize={11}
                 blockMargin={3}
-                blockRadius={2}
+                blockRadius={3}
                 fontSize={11}
                 labels={{
                   totalCount: "{{count}} contributions in {{year}}",

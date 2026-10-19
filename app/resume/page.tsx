@@ -39,7 +39,7 @@ export default function ResumePage() {
             <a
               href="/resume.pdf"
               download="Ayush_Patil_Resume.pdf"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 bg-foreground text-background text-xs font-medium rounded-md hover:bg-foreground/85 transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 bg-foreground text-background text-xs font-medium rounded-full hover:bg-foreground/85 transition-colors shadow-sm"
             >
               <DownloadSimpleIcon size={14} />
               Download PDF
@@ -48,7 +48,7 @@ export default function ResumePage() {
               href={resumeURL}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1.5 px-3.5 py-1.5 border border-border text-xs font-medium rounded-md hover:bg-muted/60 transition-colors"
+              className="inline-flex items-center gap-1.5 px-4 py-2 border border-border text-xs font-medium rounded-full hover:bg-muted/60 transition-colors"
             >
               Open in New Tab
               <ArrowUpRightIcon size={13} />
@@ -56,7 +56,7 @@ export default function ResumePage() {
           </div>
         </div>
 
-        <div className="w-full rounded-lg overflow-hidden border border-border shadow-sm bg-muted/20" style={{ height: "calc(100vh - 220px)", minHeight: "600px" }}>
+        <div className="w-full rounded-2xl overflow-hidden border border-border shadow-sm bg-muted/20" style={{ height: "calc(100vh - 220px)", minHeight: "600px" }}>
           <iframe
             src={resumeURL}
             className="w-full h-full border-0"

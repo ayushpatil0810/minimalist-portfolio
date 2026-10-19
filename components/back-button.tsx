@@ -9,10 +9,10 @@ export function BackButton() {
   return (
     <button
       onClick={() => router.back()}
-      className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-foreground transition-colors w-fit"
+      className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full border border-border/50 bg-muted/15 hover:bg-muted/35 text-xs text-muted-foreground hover:text-foreground transition-colors w-fit font-mono cursor-pointer"
     >
-      <ArrowLeftIcon size={16} />
-      Go back
+      <ArrowLeftIcon size={14} />
+      go back
     </button>
   );
 }

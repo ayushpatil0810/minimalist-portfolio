@@ -37,13 +37,13 @@ export default function NotFound() {
         <div className="flex items-center gap-3 flex-wrap">
           <Link
             href="/"
-            className="inline-flex items-center gap-2 px-5 py-2.5 bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-foreground text-background text-sm font-medium hover:bg-foreground/85 transition-colors shadow-sm"
           >
             Go home
           </Link>
           <Link
             href="/projects"
-            className="inline-flex items-center gap-2 px-5 py-2.5 border border-border text-sm font-medium hover:bg-muted/60 transition-colors"
+            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full border border-border text-sm font-medium hover:bg-muted/60 transition-colors"
           >
             View projects
           </Link>

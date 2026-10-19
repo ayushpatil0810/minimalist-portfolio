@@ -6,7 +6,6 @@ import { GoToTop } from "@/components/go-to-top";
 import { Nav } from "@/components/nav";
 import { GithubActivity } from "@/components/github-activity";
 import { FeaturedProjects } from "@/components/featured-projects";
-import { RabbitHoles } from "@/components/rabbit-holes";
 import { JsonLd } from "@/components/json-ld";
 
 export const metadata: Metadata = {
@@ -49,7 +48,6 @@ export default function HomePage() {
         <Hero />
         <GithubActivity />
         <FeaturedProjects />
-        <RabbitHoles />
         <ContactForm />
         <SiteFooter />
       </main>

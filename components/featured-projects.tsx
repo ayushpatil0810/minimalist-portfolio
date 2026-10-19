@@ -14,9 +14,15 @@ export function FeaturedProjects() {
         </h2>
         <Link
           href="/projects"
-          className="text-[0.75rem] text-muted-foreground hover:text-foreground transition-colors flex items-center gap-1 font-mono"
+          className="group text-[0.75rem] text-muted-foreground hover:text-foreground transition-all duration-200 flex items-center font-mono px-3 py-1 rounded-full border border-border/50 bg-muted/15 hover:bg-muted/35"
         >
-          all projects <ArrowUpRightIcon size={11} />
+          <span>all projects</span>
+          <span className="w-0 group-hover:w-3 opacity-0 group-hover:opacity-100 overflow-hidden transition-all duration-200 ease-[cubic-bezier(0.22,1,0.36,1)] inline-flex items-center group-hover:ml-1">
+            <ArrowUpRightIcon
+              size={11}
+              className="shrink-0 -translate-x-1 group-hover:translate-x-0 transition-transform duration-200 ease-[cubic-bezier(0.22,1,0.36,1)]"
+            />
+          </span>
         </Link>
       </div>
 

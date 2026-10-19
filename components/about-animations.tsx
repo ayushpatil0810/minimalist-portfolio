@@ -73,24 +73,3 @@ export function SkillAboutFadeIn({
   );
 }
 
-export function HoleAnimation({
-  children,
-  index,
-  className = "",
-}: {
-  children: React.ReactNode;
-  index: number;
-  className?: string;
-}) {
-  return (
-    <motion.span
-      initial={{ opacity: 0, scale: 0.96 }}
-      whileInView={{ opacity: 1, scale: 1 }}
-      viewport={{ once: true }}
-      transition={{ type: "spring", bounce: 0, duration: 0.35, delay: index * 0.06 }}
-      className={className}
-    >
-      {children}
-    </motion.span>
-  );
-}
